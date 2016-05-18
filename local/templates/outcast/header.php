@@ -16,7 +16,7 @@
 	<!-- endinject -->
 </div>
 
-<main class="main-page">
+<main class="<?$APPLICATION->ShowProperty("main-block-class")?>">
 	<?$APPLICATION->ShowPanel()?>
 	<header>
 		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/header_logo.php")?>
