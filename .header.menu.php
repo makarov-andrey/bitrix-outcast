@@ -15,7 +15,7 @@ $aMenuLinks = Array(
     ),
     array(
         "Правила",
-        "#"
+        "rules/"
     ),
     array(
         "О проекте",
