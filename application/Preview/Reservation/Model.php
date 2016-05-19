@@ -14,7 +14,7 @@ class Model extends BaseModel
     const FORM_CODE = "preview";
     const CITY_QUESTION_CODE = "city";
     const COOKIE_BLOCK_KEY = "block_reservation";
-    const COOKIE_BLOCK_EXPIRE = 86400 * 365;
+    const COOKIE_BLOCK_EXPIRE = 31536000; //365 дней
 
     /**
      * Считает количество записавшихся на предзаказ пользователей
