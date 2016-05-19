@@ -33,8 +33,13 @@
 			)
 		);?>
 
-		<div class="logos">
+		<div class="logos show-for-large">
 			<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/header_fox_logo.php")?>
 			<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/header_rostelecom_logo.php")?>
 		</div>
+
+        <div class="mobile-menu-link">
+            <a href="#"><span class="icon-burger"></span>Меню</a>
+        </div>
 	</header>
+    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/header_mobile_rostelecom_logo.php")?>

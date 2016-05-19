@@ -5,7 +5,7 @@
 <nav class="main-nav">
     <ul>
         <?foreach($arResult as $arItem):?>
-            <li <?=($arItem["SELECTED"] ? "class=\"active\"" : "")?>>
+            <li class="<?=$arItem["PARAMS"]["LI_CLASS"]?> <?=($arItem["SELECTED"] ? "active" : "")?>">
                 <a href="<?=$arItem["LINK"]?>" class="<?=$arItem["PARAMS"]["LINK_CLASS"]?>">
                     <?if(isset($arItem["PARAMS"]["SVG"])):?>
                         <svg>

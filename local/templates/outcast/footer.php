@@ -3,8 +3,10 @@
  * @var CMain $APPLICATION
  */?>
 	<footer>
-		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_copyright.php")?>
 		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_socials.php")?>
+		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_mobile_share.php")?>
+		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_fox_logo.php")?>
+		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_copyright.php")?>
 	</footer>
 </main>
 

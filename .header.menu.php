@@ -6,7 +6,8 @@ $aMenuLinks = Array(
         array(),
         array(
             "SVG" => "#svg-icon-home",
-            "LINK_CLASS" => "home-link"
+            "LINK_CLASS" => "home-link",
+            "LI_CLASS" => "show-for-medium"
         )
     ),
     array(
@@ -35,7 +36,8 @@ $aMenuLinks = Array(
         array(),
         array(
             "SVG" => "#svg-icon-share",
-            "LINK_CLASS" => "share-link"
+            "LINK_CLASS" => "share-link",
+            "LI_CLASS" => "show-for-medium"
         )
     ),
 );
