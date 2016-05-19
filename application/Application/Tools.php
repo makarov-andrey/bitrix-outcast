@@ -4,6 +4,8 @@ namespace Application;
 
 use Bitrix\Highloadblock\HighloadBlockTable;
 use CIBlock;
+use CForm;
+use CFormField;
 use CModule;
 use Exception;
 use InvalidArgumentException;
@@ -43,27 +45,6 @@ class Tools
     }
 
     /**
-     * Достает массив с данными highload инфоблока по его коду
-     *
-     * @param string $code
-     * @return array|null
-     * @throws Exception
-     * @throws \Bitrix\Main\ArgumentException
-     */
-    public static function getHLBlockByCode ($code)
-    {
-        self::assertCodeNotEmpty($code);
-        self::includeModules("highloadblock");
-        $filter = array("NAME" => $code);
-        $params = array(
-            "filter" => $filter,
-            "limit" => 1
-        );
-        $highLoadBlock = HighloadBlockTable::getList($params)->fetch();
-        return $highLoadBlock ?: null;
-    }
-
-    /**
      * Достает id инфоблока по его коду
      *
      * @param string $code
@@ -79,7 +60,7 @@ class Tools
         $result = $CIBlock->GetList(array(), $filter);
         $result->NavStart(1);
         $IBlock = $result->Fetch();
-        return $IBlock["ID"] ?: null;
+        return $IBlock ? $IBlock["ID"] : null;
     }
 
     /**
@@ -95,11 +76,23 @@ class Tools
     }
 
     /**
+     * Проверяет точно ли $code не пустой
+     *
+     * @param mixed $id
+     */
+    protected static function assertIdValid ($id)
+    {
+        if (intval($id) <= 0) {
+            throw new InvalidArgumentException("Парамет id должен быть больше 0");
+        }
+    }
+
+    /**
      * Возвращает стандартный набор параметров для вызова компонента
      * bitrix:news.list
      *
-     * @param $IBlockType
-     * @param $IBlockCode
+     * @param string $IBlockType
+     * @param string $IBlockCode
      * @return array
      */
     public static function getDefaultNewsListComponentParams ($IBlockType, $IBlockCode)
@@ -130,5 +123,72 @@ class Tools
             "PAGER_TEMPLATE" => "",
             "PAGER_DESC_NUMBERING" => "N",
         );
+    }
+
+    /**
+     * Возвращает id веб-формы по её коду
+     *
+     * @param string $code
+     * @return int|null
+     */
+    public static function getWebFormIdByCode ($code)
+    {
+        self::assertCodeNotEmpty($code);
+        self::includeModules("form");
+        $CForm = new CForm();
+        $rsForm = $CForm->GetBySID($code);
+        $rsForm->NavStart(1);
+        $arForm = $rsForm->Fetch();
+        return $arForm ? $arForm["ID"] : null;
+    }
+
+    public static function getWebFormCodeById ($id)
+    {
+        self::assertIdValid($id);
+        self::includeModules("form");
+        $CForm = new CForm();
+        $rsForm = $CForm->GetByID($id);
+        $rsForm->NavStart(1);
+        $arForm = $rsForm->Fetch();
+        return $arForm ? $arForm["SID"] : null;
+    }
+
+    /**
+     * Возвращает стандартный набор параметров для вызова компонента
+     * bitrix:form.result.new
+     *
+     * @param string $webFormCode
+     * @return array
+     */
+    public static function getDefaultWebFormResultNewComponentParams ($webFormCode)
+    {
+        return array(
+            "SEF_MODE" => "N",
+            "WEB_FORM_ID" => self::getWebFormIdByCode($webFormCode),
+            "LIST_URL" => "",
+            "EDIT_URL" => "",
+            "SUCCESS_URL" => "",
+            "IGNORE_CUSTOM_TEMPLATE" => "N",
+            "USE_EXTENDED_ERRORS" => "Y",
+            "CACHE_TYPE" => "A"
+        );
+    }
+
+    /**
+     * Возвращает id вопроса веб-формы по его коду
+     *
+     * @param string $code
+     * @return int|null
+     * @throws Exception
+     */
+    public static function getWebFormQuestionIdByCode ($code)
+    {
+        self::assertCodeNotEmpty($code);
+        self::includeModules("form");
+        $CFormField = new CFormField();
+        $dbResult = $CFormField->GetBySID($code);
+        $dbResult->NavStart(1);
+        $result = $dbResult->Fetch();
+        return $result ? $result["ID"] : null;
     }
 }
