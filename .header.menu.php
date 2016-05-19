@@ -20,7 +20,7 @@ $aMenuLinks = Array(
     ),
     array(
         "О проекте",
-        "#"
+        "about/"
     ),
     array(
         "Премьерные показы",
