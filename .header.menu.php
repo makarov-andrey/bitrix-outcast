@@ -28,7 +28,7 @@ $aMenuLinks = Array(
     ),
     array(
         "Как смотреть",
-        "#"
+        "how-watch/"
     ),
     array(
         "",

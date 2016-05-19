@@ -27,7 +27,7 @@ $APPLICATION->SetPageProperty("main-block-class", "main-page");
             <?endif?>
         </div>
     </div>
-    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_sidebar.php")?>
+    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_events_sidebar.php")?>
 </div>
 
 <? require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php'); ?>

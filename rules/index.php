@@ -14,7 +14,7 @@ $APPLICATION->SetTitle("Правила");
                 <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/rules_side_photo_contest.php")?>
             </div>
             <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/rules_content.php")?>
-            <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_sidebar.php")?>
+            <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_events_sidebar.php")?>
         </div>
     </div>
 </div>
