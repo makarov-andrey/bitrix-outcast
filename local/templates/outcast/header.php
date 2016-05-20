@@ -8,6 +8,7 @@
 	<title><?$APPLICATION->ShowTitle()?></title>
 	<?$APPLICATION->ShowHead()?>
 	<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/head_strings.php")?>
+	<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/head_share_meta.php")?>
 </head>
 <body>
 <div style="height: 0; width: 0; position: absolute; visibility: hidden">
