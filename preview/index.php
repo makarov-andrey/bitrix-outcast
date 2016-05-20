@@ -15,7 +15,7 @@ $APPLICATION->SetPageProperty("main-block-class", "main-page");
             <h1><span>28 мая</span> в 5 городах</h1>
             <h2>Не упусти свой шанс увидеть первым новый сериал «Изгой»</h2>
             <?if(PreviewReservationModel::isUserBlocked()):?>
-                <h2>Вы успешно зарегистрировались! Ждем вас на предпоказ!</h2>
+                <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/preview_success_reservation.php")?>
             <?else:?>
                 <?//На событие добавления этой формы соществует подписка в init.php
                 $formCode = PreviewReservationModel::FORM_CODE;

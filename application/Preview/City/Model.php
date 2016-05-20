@@ -25,13 +25,44 @@ class Model extends BaseModel
         $dbResult = $CIBlockElement->GetList($sort, $filter, false, false, $select);
         $cities = array();
         while ($city = $dbResult->Fetch()) {
-            $cities[] = array(
-                "ID" => $city["ID"],
-                "NAME" => $city["NAME"],
-                "RESERVATIONS_AMOUNT" => $city["PROPERTY_RESERVATIONS_AMOUNT_VALUE"]
-            );
+            $cities[] = self::formatDBResult($city);
         }
         return $cities;
+    }
+
+    /**
+     * достает запись из БД по id
+     *
+     * @param $id
+     * @return null
+     */
+    public function find ($id)
+    {
+        $filter = self::getDefaultFilter();
+        $filter["ID"] = $id;
+        $select = self::getDefaultSelect();
+        $CIBlockElement = new CIBlockElement();
+        $dbResult = $CIBlockElement->GetList(array(), $filter, false, false, $select);
+        $dbResult->NavStart(1);
+        $city = $dbResult->Fetch();
+        return $city ? self::formatDBResult($city) : null;
+    }
+
+    /**
+     * создает массив из алиасов для значений в свойствах и полях инфоблока
+     *
+     * @param $city
+     * @return array
+     */
+    public function formatDBResult ($city)
+    {
+        return array(
+            "ID" => $city["ID"],
+            "NAME" => $city["NAME"],
+            "RESERVATIONS_AMOUNT" => $city["PROPERTY_RESERVATIONS_AMOUNT_VALUE"],
+            "ADDRESS" => $city["PROPERTY_ADDRESS_VALUE"],
+            "TIME" => $city["PROPERTY_TIME_VALUE"]
+        );
     }
 
     /**
@@ -63,7 +94,9 @@ class Model extends BaseModel
         return array(
             "ID",
             "NAME",
-            "PROPERTY_RESERVATIONS_AMOUNT"
+            "PROPERTY_RESERVATIONS_AMOUNT",
+            "PROPERTY_ADDRESS",
+            "PROPERTY_TIME"
         );
     }
 }
