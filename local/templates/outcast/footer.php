@@ -9,7 +9,7 @@
 		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_copyright.php")?>
 	</footer>
 </main>
-
 <div class="main-loader"></div>
+<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_google_analytics.php")?>
 </body>
 </html>
