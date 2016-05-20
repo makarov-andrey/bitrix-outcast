@@ -1,1 +1,1 @@
-<a href="#" class="big-button">Подключить</a>
+<a href="http://moscow.rt.ru/inttv/device_tv" class="big-button">Подключить</a>
