@@ -1,0 +1,1 @@
+<a href="#" class="rostelecom-logo"><img src="<?=SITE_TEMPLATE_PATH?>/images/rostelecom-logo.png" alt="Rostelecom"></a>

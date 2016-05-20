@@ -1,0 +1,1 @@
+<a href="#" class="big-button">Подключить</a>
