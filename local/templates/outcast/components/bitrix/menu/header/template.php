@@ -1,5 +1,6 @@
 <? if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 /**
+ * @var CMain $APPLICATION
  * @var array $arResult
  */?>
 <nav class="main-nav">
@@ -16,5 +17,6 @@
                 </a>
             </li>
         <?endforeach?>
+        <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/header_menu_share.php")?>
     </ul>
 </nav>

@@ -11,6 +11,7 @@ $_GET["sort"] = isset($_GET["sort"]) ? $_GET["sort"] : null;
 switch ($_GET["sort"]) {
     case "like":
         // TODO сортировка по лайкам
+        $sortType = "like";
         $galleryComponentSort = array(
             "SORT_BY1" => "NAME",
             "SORT_ORDER1" => "ASC",
@@ -19,6 +20,7 @@ switch ($_GET["sort"]) {
         );
         break;
     default:
+        $sortType = "date";
         $galleryComponentSort = array(
             "SORT_BY1" => "ACTIVE_FROM",
             "SORT_ORDER1" => "DESC",
@@ -49,14 +51,6 @@ $sorts = array(
 );
 ?>
 
-<?// TODO вынести стили и скрипт в css и js файлы?>
-<script>
-    $(function(){
-        $(".gallery-filters").on("change", function(){
-            $(this).submit();
-        });
-    });
-</script>
 <form class="gallery-filters">
     <div class="town-select">
         <?$APPLICATION->IncludeComponent(
@@ -77,9 +71,10 @@ $sorts = array(
     <div class="sort-by">
         <label>Сортировать по:</label>
         <?foreach($sorts as $sort):?>
-            <label class="sort-button transparent-btn" style="cursor: pointer">
+            <?$checked = $sortType == $sort["value"]?>
+            <label class="sort-button transparent-btn <?=($checked ? "active" : "")?>">
                 <?=$sort["text"]?>
-                <input type="radio" name="sort" value="<?=$sort["value"]?>" <?=($_GET["sort"] == $sort["value"] ? "checked" : "")?> style="display: none">
+                <input type="radio" name="sort" value="<?=$sort["value"]?>" <?=($checked ? "checked" : "")?>>
             </label>
         <?endforeach;?>
     </div>

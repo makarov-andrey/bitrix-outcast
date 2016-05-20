@@ -1,0 +1,7 @@
+.gallery-filters .sort-button {
+    cursor: pointer;
+}
+
+.gallery-filters .sort-button input {
+    display: none;
+}

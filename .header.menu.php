@@ -25,15 +25,5 @@ $aMenuLinks = Array(
     array(
         "Как смотреть",
         "how-watch/"
-    ),
-    array(
-        "",
-        "#",
-        array(),
-        array(
-            "SVG" => "#svg-icon-share",
-            "LINK_CLASS" => "share-link",
-            "LI_CLASS" => "show-for-medium"
-        )
-    ),
+    )
 );
