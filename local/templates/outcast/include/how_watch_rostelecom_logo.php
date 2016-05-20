@@ -1,1 +1,1 @@
-<a href="#" class="rostelecom-logo"><img src="<?=SITE_TEMPLATE_PATH?>/images/rostelecom-logo.png" alt="Rostelecom"></a>
+<a href="http://moscow.rt.ru/inttv/device_tv" class="rostelecom-logo"><img src="<?=SITE_TEMPLATE_PATH?>/images/rostelecom-logo.png" alt="Rostelecom"></a>

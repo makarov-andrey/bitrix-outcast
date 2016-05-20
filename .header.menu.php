@@ -11,8 +11,8 @@ $aMenuLinks = Array(
         )
     ),
     array(
-        "Фотоконкурс",
-        "photo-contest/"
+        "Премьерные показы",
+        "preview/"
     ),
     array(
         "Правила",
@@ -21,10 +21,6 @@ $aMenuLinks = Array(
     array(
         "О проекте",
         "about/"
-    ),
-    array(
-        "Премьерные показы",
-        "preview/"
     ),
     array(
         "Как смотреть",

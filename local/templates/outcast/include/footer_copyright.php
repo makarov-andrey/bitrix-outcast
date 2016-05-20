@@ -1,1 +1,1 @@
-<div class="rights">© FOX International Channels <b>18+</b> Создание сайта — <a href="#" target="_blank">Articul Media</a></div>
+<div class="rights">© FOX International Channels <b>18+</b> Создание сайта — <a href="http://articulmedia.ru/" target="_blank">Articul Media</a></div>
