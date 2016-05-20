@@ -30,9 +30,7 @@
                     <?foreach ($arQuestion["CITIES"] as $arCity):?>
                         <option value="<?=$arCity["ID"]?>" <?=($arCity["RESERVATIONS_BLOCKED"] ? "disabled" : "")?>>
                             <?=$arCity["NAME"]?>
-                            <?if(!$arCity["RESERVATIONS_BLOCKED"]):?>
-                                (осталось <?=$arCity["RESERVATIONS_BALANCE"]?>)
-                            <?else:?>
+                            <?if($arCity["RESERVATIONS_BLOCKED"]):?>
                                 (мест больше нет)
                             <?endif?>
                         </option>
