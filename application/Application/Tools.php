@@ -58,10 +58,10 @@ class Tools
      *
      * @param mixed $id
      */
-    public static function assertIdValid ($id)
+    public static function assertValidId ($id)
     {
         if (intval($id) <= 0) {
-            throw new InvalidArgumentException("Парамет id должен быть больше 0");
+            throw new InvalidArgumentException("Параметр id должен быть больше 0");
         }
     }
 }

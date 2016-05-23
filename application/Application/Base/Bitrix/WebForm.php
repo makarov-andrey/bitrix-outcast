@@ -36,7 +36,7 @@ class WebForm
      */
     public static function getCodeById($id)
     {
-        Tools::assertIdValid($id);
+        Tools::assertValidId($id);
         Tools::includeModules("form");
         $CForm = new CForm();
         $rsForm = $CForm->GetByID($id);
