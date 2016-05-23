@@ -1,8 +1,6 @@
 <?
-use Application\Tools;
-/**
- * @var CMain $APPLICATION;
- */
+/** @var CMain $APPLICATION; */
+use Application\Base\Bitrix\Component\NewsList;
 
 global $galleryComponentSort, $galleryComponentFilter;
 
@@ -57,7 +55,7 @@ $sorts = array(
             "bitrix:news.list",
             "photo_gallery_cities_select",
             array_merge(
-                Tools::getDefaultNewsListComponentParams("photogallery", "photogallery_cities"),
+                NewsList::getDefaultParams("photogallery", "photogallery_cities"),
                 array(
                     "NEWS_COUNT" => 999,
                     "SORT_BY1" => "SORT",

@@ -1,4 +1,4 @@
-<? require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
+<? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 /**
  * @var CMain $APPLICATION
  */
@@ -17,4 +17,4 @@ $APPLICATION->SetPageProperty("main-block-class", "gallery-page");
     </div>
 </div>
 
-<? require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php'); ?>
+<? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

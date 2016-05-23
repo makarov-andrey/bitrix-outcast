@@ -1,9 +1,10 @@
-<? require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
-use Application\Tools;
-use Preview\Reservation\Model as PreviewReservationModel;
-/**
- * @var CMain $APPLICATION
+<? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+/**  
+ * @var CMain $APPLICATION 
  */
+use Application\Base\Bitrix\Component\FormResultNew;
+use Preview\Reservation\Model as PreviewReservationModel;
+
 $APPLICATION->SetTitle("Предпоказ");
 $APPLICATION->SetPageProperty("main-block-class", "main-page");
 ?>
@@ -22,7 +23,7 @@ $APPLICATION->SetPageProperty("main-block-class", "main-page");
                 $APPLICATION->IncludeComponent(
                     "bitrix:form.result.new",
                     "preview",
-                    Tools::getDefaultWebFormResultNewComponentParams($formCode)
+                    FormResultNew::getDefaultParams($formCode)
                 );?>
             <?endif?>
         </div>
@@ -30,5 +31,5 @@ $APPLICATION->SetPageProperty("main-block-class", "main-page");
     <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_events_sidebar.php")?>
 </div>
 
-<? require($_SERVER['DOCUMENT_ROOT'].'/bitrix/footer.php'); ?>
+<? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>
 

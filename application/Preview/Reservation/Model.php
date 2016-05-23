@@ -3,8 +3,8 @@
 namespace Preview\Reservation;
 
 
+use Application\Base\Bitrix\WebForm;
 use Application\Base\Model as BaseModel;
-use Application\Tools;
 use CFormResult;
 
 class Model extends BaseModel
@@ -30,7 +30,7 @@ class Model extends BaseModel
     public function countForCity($cityId)
     {
         $CFormResult = new CFormResult();
-        $formId = Tools::getWebFormIdByCode(self::FORM_CODE);
+        $formId = WebForm::getIdByCode(self::FORM_CODE);
         $by = "s_id";
         $order = "asc";
         $filter = array(
@@ -155,7 +155,7 @@ class Model extends BaseModel
      */
     public static function blockUserAfterSave ($webFormId, $resultId)
     {
-        $webFormCode = Tools::getWebFormCodeById($webFormId);
+        $webFormCode = WebForm::getCodeById($webFormId);
         if ($webFormCode == self::FORM_CODE) {
             self::blockCurrentUser($resultId);
         }

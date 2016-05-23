@@ -2,6 +2,7 @@
 
 namespace Preview\City;
 
+use Application\Base\Bitrix\IBlock;
 use Application\Base\Model as BaseModel;
 use CIBlockElement;
 
@@ -81,9 +82,7 @@ class Model extends BaseModel
      */
     public static function getDefaultFilter ()
     {
-        return array(
-            "IBLOCK_CODE" => self::IBLOCK_CODE
-        );
+        return IBlock::getDefaultFilter(self::IBLOCK_CODE);
     }
 
     /**
@@ -91,12 +90,13 @@ class Model extends BaseModel
      */
     public static function getDefaultSelect ()
     {
-        return array(
-            "ID",
-            "NAME",
-            "PROPERTY_RESERVATIONS_AMOUNT",
-            "PROPERTY_ADDRESS",
-            "PROPERTY_TIME"
+        return array_merge(
+            IBlock::getDefaultSelect(),
+            array(
+                "PROPERTY_RESERVATIONS_AMOUNT",
+                "PROPERTY_ADDRESS",
+                "PROPERTY_TIME"
+            )
         );
     }
 }
