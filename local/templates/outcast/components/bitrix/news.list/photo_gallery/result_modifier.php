@@ -2,6 +2,10 @@
 /**
  * @var array $arResult
  */
+
+use PhotoGallery\Model;
+$model = new Model();
+
 $CFile = new CFile();
 $pictureSizes = array(
     "width" => 256,
@@ -10,5 +14,7 @@ $pictureSizes = array(
 
 foreach ($arResult["ITEMS"] as &$arItem) {
     $arItem["DISPLAY_PICTURE"] = $CFile->ResizeImageGet($arItem["DETAIL_PICTURE"], $pictureSizes, BX_RESIZE_IMAGE_EXACT);
+    $arItem["LIKED"] = $model->isCurrentUserLiked($arItem["ID"]);
+    $arItem["LIKES_AMOUNT"] = $model->countLikes($arItem["ID"]);
 }
 unset($arItem);

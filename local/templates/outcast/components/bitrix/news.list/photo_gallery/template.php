@@ -16,12 +16,12 @@
             </a>
             <span class="gallery-item-name"><?=$arItem["NAME"]?></span>
             <div class="share-like-block">
-                <a class="share-like-block-side">
+                <a class="share-like-block-side js--like <?=($arItem["LIKED"] ? "liked" : "")?>" data-photo-id="<?=$arItem["ID"]?>">
                     <svg class="icon">
                         <use xlink:href="#svg-icon-like"></use>
                     </svg>
-                    <b>+1</b>
-                    <span class="likes-count">1205</span>
+                    <b class="like-avail">+1</b>
+                    <span class="likes-count"><?=$arItem["LIKES_AMOUNT"]?></span>
                 </a>
 
                 <div class="share-like-block-side text-center share-like-block-sharing">

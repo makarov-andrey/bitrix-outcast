@@ -8,6 +8,7 @@ use Application\Base\Model as BaseModel;
 use Application\Tools;
 use CIBlockElement;
 use InvalidArgumentException;
+use User\Model as UserModel;
 
 class Model extends BaseModel
 {
@@ -40,8 +41,22 @@ class Model extends BaseModel
         );
         $select = IBlock::getDefaultSelect();
         $dbResult = $CIBlockElement->GetList(array(), $filter, false, false, $select);
+        $dbResult->NavStart(1);
         $result = $dbResult->fetch();
         return !empty($result);
+    }
+
+    /**
+     * Вернет true, если текущий пользователь лайкнул фотографию
+     *
+     * @param int $photoId
+     * @return bool
+     */
+    public function isCurrentUserLiked ($photoId)
+    {
+        global $USER;
+        $userId = intval($USER->GetID());
+        return $userId > 0 && self::isUserLiked($photoId, $userId);
     }
 
     /**
@@ -54,7 +69,7 @@ class Model extends BaseModel
     public function like ($photoId, $userId)
     {
         self::assertUserNotLiked($photoId, $userId);
-        self::saveLike($photoId, $userId);
+        self::addLike($photoId, $userId);
     }
 
     /**
@@ -63,7 +78,7 @@ class Model extends BaseModel
      * @param int $photoId
      * @param int $userId
      */
-    protected function saveLike ($photoId, $userId)
+    public function addLike ($photoId, $userId)
     {
         Tools::assertValidId($userId);
         Tools::assertValidId($photoId);
@@ -75,7 +90,68 @@ class Model extends BaseModel
     }
 
     /**
-     * Достает пользователей, которые уже лайкнули фотографию
+     * Удаляет лайк от пользователя для фотографии. Не вернет ошибку, если
+     * пользователь не ставил лайк.
+     *
+     * @param int $photoId
+     * @param int $userId
+     */
+    public function removeLike ($photoId, $userId)
+    {
+        Tools::assertValidId($userId);
+        Tools::assertValidId($photoId);
+        $iBlockId = self::getIBlockID();
+        $likedUsers = self::getUsersWhoLikesThePhoto($photoId);
+        $key = array_search($userId, $likedUsers);
+        if ($key === false) {
+            return;
+        }
+        unset($likedUsers[$key]);
+        if (empty($likedUsers)) {
+            /*
+             * Если фотку лайкал только один пользователь, которого мы
+             * сейчас удаляем, то массив $likedUsers станет пустым.
+             * Если в ебучий битрикс передать пустой массив, то он не
+             * станет ставить множественное поле пустым. Для этого ему
+             * нужно передать false.
+             */
+            $likedUsers = false;
+        }
+        $values = array(self::LIKED_USERS_PROPERTY_CODE => $likedUsers);
+        CIBlockElement::SetPropertyValuesEx($photoId, $iBlockId, $values);
+    }
+
+    /**
+     * Если пользователь лайкнул фото, то удаляет лайк.
+     * Иначе - добавляет его
+     *
+     * @param int $photoId
+     * @param int $userId
+     */
+    public function toggleLike ($photoId, $userId)
+    {
+        if (self::isUserLiked($photoId, $userId)) {
+            self::removeLike($photoId, $userId);
+        } else {
+            self::addLike($photoId, $userId);
+        }
+    }
+
+    /**
+     * Меняет состояние лайка текущего пользователя для фотографии
+     *
+     * @param int $photoId
+     */
+    public function toggleCurrentUserLike ($photoId)
+    {
+        global $USER;
+        UserModel::assertUserAuthorized();
+        $userId = $USER->GetID();
+        self::toggleLike($photoId, $userId);
+    }
+
+    /**
+     * Возвращает массив пользователей, которые уже лайкнули фотографию
      *
      * @param int $photoId
      * @return array
@@ -87,12 +163,27 @@ class Model extends BaseModel
         $filter = array(
             "CODE" => self::LIKED_USERS_PROPERTY_CODE
         );
-        $rsResult = CIBlockElement::GetProperty($iBlockId, $photoId, array(), $filter);
+        $dbResult = CIBlockElement::GetProperty($iBlockId, $photoId, "sort", "asc", $filter);
         $users = array();
-        while($like = $rsResult->Fetch()) {
-            $users[] = $like["VALUE"];
+        while($user = $dbResult->Fetch()) {
+            $userId = intval($user["VALUE"]);
+            if ($userId > 0) {
+                $users[] = $user["VALUE"];
+            }
         }
         return $users;
+    }
+
+    /**
+     * Подсчитывает количество лайков для фотографии
+     *
+     * @param int $photoId
+     * @return int
+     */
+    public function countLikes ($photoId)
+    {
+        $users = self::getUsersWhoLikesThePhoto($photoId);
+        return count($users);
     }
 
     /**

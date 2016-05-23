@@ -29,3 +29,7 @@ $(function(){
         return false;
     });
 });
+
+function defaultAjaxErrorHandler() {
+    alert("Извините, произошла внутренняя ошибка сервера.");
+}
