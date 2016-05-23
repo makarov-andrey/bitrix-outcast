@@ -20,7 +20,7 @@
                     <svg class="icon">
                         <use xlink:href="#svg-icon-like"></use>
                     </svg>
-                    <b class="like-avail">+1</b>
+                    <b class="like-index">1</b>
                     <span class="likes-count"><?=$arItem["LIKES_AMOUNT"]?></span>
                 </a>
 
