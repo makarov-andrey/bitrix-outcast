@@ -4,7 +4,12 @@
  */
 ?>
 <?foreach($arResult["ITEMS"] as $arItem):?>
-    <a class="events-item <?=$arItem["PROPERTIES"]["ICON"]["VALUE_XML_ID"]?>" href="<?=$arItem["PROPERTIES"]["LINK"]["VALUE"]?>">
+    <?if(!empty($arItem["PROPERTIES"]["LINK"]["VALUE"])):?>
+        <a class="events-item <?=$arItem["PROPERTIES"]["ICON"]["VALUE_XML_ID"]?>" href="<?=$arItem["PROPERTIES"]["LINK"]["VALUE"]?>">
+    <?else:?>
+        <div class="events-item <?=$arItem["PROPERTIES"]["ICON"]["VALUE_XML_ID"]?>">
+    <?endif?>
+
         <?if(!empty($arItem["ACTIVE_FROM_FORMATTED"]) || !empty($arItem["ACTIVE_TO_FORMATTED"])):?>
             <span class="events-date">
                 <?if(!empty($arItem["ACTIVE_FROM_FORMATTED"])):?>
@@ -19,5 +24,10 @@
         <?if(!empty($arItem["PREVIEW_TEXT"])):?>
             <span class="events-caption"><?=$arItem["PREVIEW_TEXT"]?></span>
         <?endif?>
-    </a>
+
+    <?if(empty($arItem["PROPERTIES"]["LINK"]["VALUE"])):?>
+        </div>
+    <?else:?>
+        </a>
+    <?endif?>
 <?endforeach?>
