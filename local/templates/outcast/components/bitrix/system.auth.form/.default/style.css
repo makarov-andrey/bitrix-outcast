@@ -1,0 +1,6 @@
+.header-socserv-button.disabled,
+.sidebar-socserv-button.disabled {
+    background-color: #646263;
+    cursor: default;
+    opacity: 1 !important;
+}

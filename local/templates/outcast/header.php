@@ -6,6 +6,7 @@
 <html>
 <head lang="en">
 	<title><?$APPLICATION->ShowTitle()?></title>
+	<?CJSCore::Init();?>
 	<?$APPLICATION->ShowHead()?>
 	<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/head_strings.php")?>
 	<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/head_share_meta.php")?>

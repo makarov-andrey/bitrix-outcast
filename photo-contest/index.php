@@ -1,5 +1,6 @@
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 /**
+ * @var CUser $USER
  * @var CMain $APPLICATION
  */
 
@@ -8,6 +9,22 @@ $APPLICATION->SetPageProperty("main-block-class", "gallery-page");
 ?>
 
 <div class="content">
+	<?if($USER->IsAuthorized()):?>
+		Вы авторизованы!<br>
+		<a href="?logout=YES">Логаут</a>
+	<?else:?>
+	    <?$APPLICATION->IncludeComponent(
+	        "bitrix:system.auth.form",
+	        "",
+	        Array(
+	            "REGISTER_URL" => "",
+	            "FORGOT_PASSWORD_URL" => "",
+	            "PROFILE_URL" => "",
+	            "SHOW_ERRORS" => "N",
+	        ),
+	        false
+	    );?>
+	<?endif?>
     <div class="gallery-wrapper row">
         <h1 class="text-uppercase text-center">участвуй в акции в торговых центрах своего города,
             твое фото появится здесь</h1>
