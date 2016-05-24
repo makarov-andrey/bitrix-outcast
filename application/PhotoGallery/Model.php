@@ -19,6 +19,7 @@ class Model extends BaseModel
 
     const LIKED_USERS_PROPERTY_CODE = "LIKED_USERS";
     const CITY_PROPERTY_CODE = "CITY";
+    const LIKES_AMOUNT_PROPERTY_CODE = "LIKES_AMOUNT";
 
     /**
      * Вернет true, если пользователь лайкал фотографию раньше
@@ -56,7 +57,7 @@ class Model extends BaseModel
     {
         global $USER;
         $userId = intval($USER->GetID());
-        return $userId > 0 && self::isUserLiked($photoId, $userId);
+        return $userId > 0 && $this->isUserLiked($photoId, $userId);
     }
 
     /**
@@ -68,8 +69,8 @@ class Model extends BaseModel
      */
     public function like ($photoId, $userId)
     {
-        self::assertUserNotLiked($photoId, $userId);
-        self::addLike($photoId, $userId);
+        $this->assertUserNotLiked($photoId, $userId);
+        $this->addLike($photoId, $userId);
     }
 
     /**
@@ -82,11 +83,9 @@ class Model extends BaseModel
     {
         Tools::assertValidId($userId);
         Tools::assertValidId($photoId);
-        $iBlockId = self::getIBlockID();
-        $likedUsers = self::getUsersWhoLikesThePhoto($photoId);
+        $likedUsers = $this->getUsersWhoLikesThePhoto($photoId);
         $likedUsers[] = $userId;
-        $values = array(self::LIKED_USERS_PROPERTY_CODE => $likedUsers);
-        CIBlockElement::SetPropertyValuesEx($photoId, $iBlockId, $values);
+        $this->saveLikes($photoId, $likedUsers);
     }
 
     /**
@@ -100,24 +99,45 @@ class Model extends BaseModel
     {
         Tools::assertValidId($userId);
         Tools::assertValidId($photoId);
-        $iBlockId = self::getIBlockID();
-        $likedUsers = self::getUsersWhoLikesThePhoto($photoId);
+        $likedUsers = $this->getUsersWhoLikesThePhoto($photoId);
         $key = array_search($userId, $likedUsers);
         if ($key === false) {
             return;
         }
         unset($likedUsers[$key]);
-        if (empty($likedUsers)) {
+        $this->saveLikes($photoId, $likedUsers);
+    }
+
+    /**
+     * Сохраняет информацию о лайках для фотографии. В том числе актуализирует
+     * поле количества лайков
+     *
+     * @param int $photoId
+     * @param int[] $likes
+     */
+    protected function saveLikes ($photoId, $likes) {
+        $iBlockId = self::getIBlockID();
+        $likesAmount = count($likes);
+        if (empty($likes)) {
             /*
-             * Если фотку лайкал только один пользователь, которого мы
-             * сейчас удаляем, то массив $likedUsers станет пустым.
-             * Если в ебучий битрикс передать пустой массив, то он не
-             * станет ставить множественное поле пустым. Для этого ему
-             * нужно передать false.
+             * Если фотку лайкал только один пользователь, которого мы сейчас удаляем,
+             * то массив $likedUsers станет пустым. Если в ебучий битрикс передать
+             * пустой массив, то он не станет ставить множественное поле пустым. Для
+             * этого ему нужно передать false.
              */
-            $likedUsers = false;
+            $likes = false;
         }
-        $values = array(self::LIKED_USERS_PROPERTY_CODE => $likedUsers);
+        $values = array(
+            self::LIKED_USERS_PROPERTY_CODE => $likes,
+            /*
+             * Т.к. в битриксе невозможно сортировать выборку элементов инфоблока по
+             * количеству значений в множественном поле (в данном случае - поле с лайками
+             * пользователей), а сортировка по лайкам необходима по ТЗ, то приходится
+             * всегда поддерживать поле количества лайков актуальным, чтобы можно было
+             * по нему отсортировать.
+             */
+            self::LIKES_AMOUNT_PROPERTY_CODE => $likesAmount
+        );
         CIBlockElement::SetPropertyValuesEx($photoId, $iBlockId, $values);
     }
 
@@ -130,10 +150,10 @@ class Model extends BaseModel
      */
     public function toggleLike ($photoId, $userId)
     {
-        if (self::isUserLiked($photoId, $userId)) {
-            self::removeLike($photoId, $userId);
+        if ($this->isUserLiked($photoId, $userId)) {
+            $this->removeLike($photoId, $userId);
         } else {
-            self::addLike($photoId, $userId);
+            $this->addLike($photoId, $userId);
         }
     }
 
@@ -147,7 +167,7 @@ class Model extends BaseModel
         global $USER;
         UserModel::assertUserAuthorized();
         $userId = $USER->GetID();
-        self::toggleLike($photoId, $userId);
+        $this->toggleLike($photoId, $userId);
     }
 
     /**
@@ -182,7 +202,7 @@ class Model extends BaseModel
      */
     public function countLikes ($photoId)
     {
-        $users = self::getUsersWhoLikesThePhoto($photoId);
+        $users = $this->getUsersWhoLikesThePhoto($photoId);
         return count($users);
     }
 
@@ -192,9 +212,9 @@ class Model extends BaseModel
      * @param int $photoId
      * @param int $userId
      */
-    public static function assertUserNotLiked ($photoId, $userId)
+    public function assertUserNotLiked ($photoId, $userId)
     {
-        if (self::isUserLiked($photoId, $userId)) {
+        if ($this->isUserLiked($photoId, $userId)) {
             throw new InvalidArgumentException("Пользователь уже лайкал эту фотографию");
         }
     }
