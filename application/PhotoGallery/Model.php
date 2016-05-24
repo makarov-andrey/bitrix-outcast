@@ -7,6 +7,7 @@ use Application\Base\Bitrix\IBlock;
 use Application\Base\Model as BaseModel;
 use Application\Tools;
 use CIBlockElement;
+use CFile;
 use InvalidArgumentException;
 use User\Model as UserModel;
 
@@ -20,6 +21,22 @@ class Model extends BaseModel
     const LIKED_USERS_PROPERTY_CODE = "LIKED_USERS";
     const CITY_PROPERTY_CODE = "CITY";
     const LIKES_AMOUNT_PROPERTY_CODE = "LIKES_AMOUNT";
+
+    /**
+     * Возвращает фотографию по её id
+     *
+     * @param int $id
+     * @return array|null
+     */
+    public function findPhoto ($id)
+    {
+        $CIBlockElement = new CIBlockElement();
+        $dbResult = $CIBlockElement->GetByID($id);
+        $photo = $dbResult->Fetch();
+        $CFile = new CFile();
+        $photo["PICTURE_SRC"] = $CFile->GetPath($photo["DETAIL_PICTURE"]);;
+        return $photo ?: null;
+    }
 
     /**
      * Вернет true, если пользователь лайкал фотографию раньше
@@ -233,5 +250,18 @@ class Model extends BaseModel
     public static function getIBlockID ()
     {
         return IBlock::getIdByCode(self::IBLOCK_CODE);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getDefaultSelect ()
+    {
+        return array_merge(
+            IBlock::getDefaultSelect(),
+            array(
+                "DETAIL_PICTURE"
+            )
+        );
     }
 }
