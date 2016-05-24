@@ -4,15 +4,11 @@
             <use xlink:href="#svg-icon-share"></use>
         </svg>
         <span class="share-popup">
-            <a href="#">
-                <svg class="icon js--vk-share">
-                    <use xlink:href="#svg-icon-vk"></use>
-                </svg>
+            <a href="#" class="js--vk-share">
+                <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_vk_icon.php")?>
             </a>
-            <a href="#">
-                <svg class="icon js--fb-share">
-                    <use xlink:href="#svg-icon-fb"></use>
-                </svg>
+            <a href="#" class="js--fb-share">
+                <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_fb_icon.php")?>
             </a>
         </span>
     </span>

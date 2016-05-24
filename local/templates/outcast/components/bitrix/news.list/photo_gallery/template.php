@@ -44,14 +44,10 @@
                 </svg>
                 <span class="share-like-block-sharing-wrapper">
                     <a href="#">
-                        <svg class="icon">
-                            <use xlink:href="#svg-icon-vk"></use>
-                        </svg>
+                        <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_vk_icon.php")?>
                     </a>
                     <a href="#">
-                        <svg class="icon">
-                            <use xlink:href="#svg-icon-fb"></use>
-                        </svg>
+                        <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_fb_icon.php")?>
                     </a>
                 </span>
             </div>
