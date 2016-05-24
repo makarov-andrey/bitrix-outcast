@@ -19,12 +19,12 @@ var Share = new (function(){
      * @param {string} image
      * @returns {string}
      */
-    function getShareURLWithImage (url, image) {
+    function getShareURLWithPhotoId (url, photoId) {
         var parsedUrl = url.split("?"),
             host = parsedUrl.shift(),
             query = parsedUrl.join("?"),
             shareURLData = {
-                share_url: image
+                share_photo_id: photoId
             };
         if (query.length > 0) {
             query += "&";
@@ -44,6 +44,9 @@ var Share = new (function(){
         }
         if (!isValidURL(params.url)) {
             params.url = location.origin + location.pathname + location.search;
+        }
+        if (!params.photoId) {
+            params.photoId = false;
         }
         if (!params.image) {
             params.image = false;
@@ -83,8 +86,16 @@ var Share = new (function(){
     controller.fb = function (params) {
         params = formatParams(params);
         var resourceURL  = "http://www.facebook.com/sharer.php";
-        if (params.image) {
-            params.url = getShareURLWithImage(params.url, params.image);
+        /**
+         * Для того, чтобы опрокинуть в шаринг фейсбука картинку можно использовать
+         * только разметку open-graph. Соответственно к шарящему url надо добавить
+         * get-параметр, по которому бек-энд поставит нужный мета-тег. Так же фейсбук 
+         * ругается на длину шарящегося URL, поэтому передать в параметре адрес 
+         * к картинке нельзя. Параметром опрокидываем id фотографии, а бекенд уже по
+         * нему вытягивает адрес картинки и кладет его в мета-тег.
+         */
+        if (params.photoId) {
+            params.url = getShareURLWithPhotoId(params.url, params.photoId);
         }
         var fbData = {
             s: 100,
@@ -120,7 +131,8 @@ $(function(){
     function getShareParams($element) {
         return {
             url: $element.data("shareUrl"),
-            image: $element.data("shareImage")
+            image: $element.data("shareImage"),
+            photoId: $element.data("sharePhotoId")
         }
     }
 

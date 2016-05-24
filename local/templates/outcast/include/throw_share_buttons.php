@@ -12,6 +12,10 @@ if (isset($arParams["image"])) {
     $param = $arParams["image"];
     $dataString .= " data-share-image=\"$param\"";
 }
+if (isset($arParams["photo_id"])) {
+    $param = $arParams["photo_id"];
+    $dataString .= " data-share-photo-id=\"$param\"";
+}
 ?>
 
 <a href="#" class="js--vk-share"<?=$dataString?>>
