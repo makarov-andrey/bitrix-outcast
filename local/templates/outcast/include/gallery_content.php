@@ -3,12 +3,14 @@
 use Application\Base\Bitrix\Component\NewsList;
 use PhotoGallery\Model;
 
-global //объявляются в gallery_filter.php
-    $galleryComponentSort,
-    $galleryComponentFilter;
+include __DIR__ . "/gallery_declare_filter.php";
+include __DIR__ . "/gallery_declare_sort.php";
+
+global $galleryComponentSort, $galleryComponentFilter;
 
 $iBlockCode = Model::IBLOCK_CODE;
 $iBlockType = Model::IBLOCK_TYPE;
+
 
 $APPLICATION->IncludeComponent(
     "bitrix:news.list",
@@ -18,7 +20,7 @@ $APPLICATION->IncludeComponent(
         $galleryComponentSort,
         array(
             "FIELD_CODE" => array("DETAIL_PICTURE"),
-            "NEWS_COUNT" => 9,
+            "NEWS_COUNT" => 12,
             "FILTER_NAME" => "galleryComponentFilter"
         )
     )

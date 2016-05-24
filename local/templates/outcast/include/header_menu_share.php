@@ -3,17 +3,6 @@
         <svg>
             <use xlink:href="#svg-icon-share"></use>
         </svg>
-        <span class="share-popup">
-            <a href="#">
-                <svg class="icon js--vk-share">
-                    <use xlink:href="#svg-icon-vk"></use>
-                </svg>
-            </a>
-            <a href="#">
-                <svg class="icon js--fb-share">
-                    <use xlink:href="#svg-icon-fb"></use>
-                </svg>
-            </a>
-        </span>
+        <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_share_popup.php")?>
     </span>
 </li>

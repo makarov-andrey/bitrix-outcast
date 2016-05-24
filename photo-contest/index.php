@@ -30,7 +30,9 @@ $APPLICATION->SetPageProperty("main-block-class", "gallery-page");
             твое фото появится здесь</h1>
         <h3 class="text-center">Набери больше всех лайков и выйграй приз — фирменную футболку!</h3>
         <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/gallery_filter.php")?>
-        <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/gallery_content.php")?>
+        <div class="gallery row medium-up-3 small-up-1 can-load-content">
+            <?//Контент подгружается ajax'ом?>
+        </div>
     </div>
 </div>
 
