@@ -1,8 +1,0 @@
-.share-like-block-side .like-index:before {
-    content: "+";
-    font-weight: bold;
-}
-
-.share-like-block-side.liked .like-index:before {
-    content: "-";
-}

@@ -2,40 +2,6 @@
 /** @var CMain $APPLICATION; */
 use Application\Base\Bitrix\Component\NewsList;
 
-global $galleryComponentSort, $galleryComponentFilter;
-
-//Сортировка
-$_GET["sort"] = isset($_GET["sort"]) ? $_GET["sort"] : null;
-switch ($_GET["sort"]) {
-    case "like":
-        // TODO сортировка по лайкам
-        $sortType = "like";
-        $galleryComponentSort = array(
-            "SORT_BY1" => "NAME",
-            "SORT_ORDER1" => "ASC",
-            "SORT_BY2" => "SORT",
-            "SORT_ORDER2" => "ASC"
-        );
-        break;
-    default:
-        $sortType = "date";
-        $galleryComponentSort = array(
-            "SORT_BY1" => "ACTIVE_FROM",
-            "SORT_ORDER1" => "DESC",
-            "SORT_BY2" => "SORT",
-            "SORT_ORDER2" => "ASC"
-        );
-        break;
-}
-
-//Фильтрация
-$city = intval($_GET["city"]);
-if ($city > 0) {
-    $galleryComponentFilter = array(
-        "PROPERTY_CITY" => $city
-    );
-}
-
 //Поля сортировки
 $sorts = array(
     array(
@@ -47,6 +13,15 @@ $sorts = array(
         "value" => "like"
     )
 );
+
+switch ($_GET["sort"]) {
+    case "like":
+        $sortType = "like";
+        break;
+    default:
+        $sortType = "date";
+        break;
+}
 ?>
 
 <form class="gallery-filters">
