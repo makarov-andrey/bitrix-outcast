@@ -14,3 +14,8 @@
 .share-like-block-side.liked .like-index:before {
     content: "-";
 }
+
+.auth-popup-outer,
+.auth-popup {
+    z-index: 10000;
+}

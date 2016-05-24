@@ -253,6 +253,7 @@ function initGallery () {
                     if (window.ajaxContentPage >= window.ajaxContentPagesAmount) {
                         $gallery.removeClass("can-load-content");
                     }
+                    initColorBox();
                 },
                 error: defaultAjaxErrorHandler
             });
