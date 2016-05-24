@@ -4,10 +4,6 @@
  * @var array $arResult
  */
 ?>
-<?if(empty($arResult["ITEMS"])):?>
-    <h2>В этом городе пока нет фотографий</h2>
-    <?return?>
-<?endif?>
 
 <script>
     /**
@@ -23,6 +19,11 @@
     window.ajaxContentPagesAmount = <?=$arResult["NAV_RESULT"]->NavPageCount?>;
 </script>
 
+<?if(empty($arResult["ITEMS"])):?>
+    <h2>В этом городе пока нет фотографий</h2>
+    <?return?>
+<?endif?>
+
 <?foreach($arResult["ITEMS"] as $arItem):?>
     <div class="gallery-item column">
         <a href="<?=$arItem["DETAIL_PICTURE"]["SRC"]?>" class="gallery-item-image" data-name="Артём">
@@ -30,7 +31,7 @@
         </a>
         <span class="gallery-item-name"><?=$arItem["NAME"]?></span>
         <div class="share-like-block">
-            <a class="share-like-block-side js--like <?=($arItem["LIKED"] ? "liked" : "")?>" data-photo-id="<?=$arItem["ID"]?>">
+            <a class="share-like-block-side <?=$arResult["LIKE_CLASS"]?> <?=($arItem["LIKED"] ? "liked" : "")?>" data-photo-id="<?=$arItem["ID"]?>">
                 <svg class="icon">
                     <use xlink:href="#svg-icon-like"></use>
                 </svg>

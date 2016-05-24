@@ -1,3 +1,8 @@
+<?
+/**
+ * @var CMain $APPLICATION
+ */
+?>
 <div class="auth-popup-outer popup-outer"></div>
 <div class="auth-popup popup">
     <div class="close"></div>
@@ -7,19 +12,16 @@
             через свою любимую социальную сеть, <br>
             чтобы участвовать в голосовании</h2>
 
-        <div class="auth-buttons">
-            <a href="#" class="transparent-btn">
-                <svg class="icon">
-                    <use xlink:href="#svg-icon-vk"></use>
-                </svg>
-                ВКонтакте
-            </a>
-            <a href="#" class="transparent-btn">
-                <svg class="icon">
-                    <use xlink:href="#svg-icon-fb"></use>
-                </svg>
-                Facebook
-            </a>
-        </div>
+        <?$APPLICATION->IncludeComponent(
+            "bitrix:system.auth.form",
+            "",
+            Array(
+                "REGISTER_URL" => "",
+                "FORGOT_PASSWORD_URL" => "",
+                "PROFILE_URL" => "",
+                "SHOW_ERRORS" => "N",
+            ),
+            false
+        );?>
     </div>
 </div>

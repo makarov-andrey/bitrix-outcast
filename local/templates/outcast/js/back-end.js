@@ -201,6 +201,15 @@ function initGallery () {
     })();
 
     /**
+     * Поп-ап авторизации
+     */
+    (function(){
+        $(document).on("click", ".js--authorize", function(){
+            $(window).trigger("auth-popup-show");
+        });
+    })();
+
+    /**
      * Подгрузка контента при скролле к концу документа
      */
     (function(){

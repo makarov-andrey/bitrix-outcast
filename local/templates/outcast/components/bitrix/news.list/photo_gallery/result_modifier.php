@@ -1,5 +1,6 @@
 <? if(!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 /**
+ * @var CUser $USER
  * @var array $arResult
  */
 
@@ -22,3 +23,9 @@ foreach ($arResult["ITEMS"] as &$arItem) {
     );
 }
 unset($arItem);
+
+if ($USER->IsAuthorized()) {
+    $arResult["LIKE_CLASS"] = "js--like";
+} else {
+    $arResult["LIKE_CLASS"] = "js--authorize";
+}
