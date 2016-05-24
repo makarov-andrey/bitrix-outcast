@@ -33,7 +33,7 @@ class Model extends BaseModel
         $dbResult = $CIBlockElement->GetByID($id);
         $photo = $dbResult->Fetch();
         $CFile = new CFile();
-        $photo["PICTURE_SRC"] = $CFile->GetPath($photo["DETAIL_PICTURE"]);;
+        $photo["PICTURE_SRC"] = $CFile->GetPath($photo["DETAIL_PICTURE"]);
         return $photo ?: null;
     }
 

@@ -16,7 +16,7 @@ var Share = new (function(){
      * Возвращает URL для шаринга с get-параметром для вставки картинки
      * в open-graph разметку.
      * @param {string} url
-     * @param {string} image
+     * @param {int} photoId
      * @returns {string}
      */
     function getShareURLWithPhotoId (url, photoId) {
@@ -46,10 +46,10 @@ var Share = new (function(){
             params.url = location.origin + location.pathname + location.search;
         }
         if (!params.photoId) {
-            params.photoId = false;
+            params.photoId = null;
         }
         if (!params.image) {
-            params.image = false;
+            params.image = null;
         }
         return params;
     }
@@ -80,7 +80,7 @@ var Share = new (function(){
      * @param {object} params
      * {
      *     url: {string},
-     *     image: {string}
+     *     photoId: {int}
      * }
      */
     controller.fb = function (params) {
@@ -94,7 +94,7 @@ var Share = new (function(){
          * к картинке нельзя. Параметром опрокидываем id фотографии, а бекенд уже по
          * нему вытягивает адрес картинки и кладет его в мета-тег.
          */
-        if (params.photoId) {
+        if (params.photoId > 0) {
             params.url = getShareURLWithPhotoId(params.url, params.photoId);
         }
         var fbData = {
