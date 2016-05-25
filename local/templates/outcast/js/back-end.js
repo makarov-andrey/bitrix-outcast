@@ -210,6 +210,15 @@ function initGallery () {
     })();
 
     /**
+     * Поп-ап "спасибо, что авторизовались"
+     */
+    (function(){
+        if ($(".auth-popup").hasClass("js--onload-show")) {
+            $(window).trigger("auth-popup-show");
+        }
+    })();
+
+    /**
      * Подгрузка контента при скролле к концу документа
      */
     (function(){
