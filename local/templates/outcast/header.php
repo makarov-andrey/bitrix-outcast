@@ -8,8 +8,8 @@
 	<title><?$APPLICATION->ShowTitle()?></title>
 	<?CJSCore::Init();?>
 	<?$APPLICATION->ShowHead()?>
-	<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/head_strings.php")?>
-	<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/head_share_meta.php")?>
+	<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/header/head_strings.php")?>
+	<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/header/share_meta.php")?>
 </head>
 <body>
 <div style="height: 0; width: 0; position: absolute; visibility: hidden">
@@ -21,7 +21,7 @@
 <main class="<?$APPLICATION->ShowProperty("main-block-class")?>">
 	<?$APPLICATION->ShowPanel()?>
 	<header>
-		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/header_logo.php")?>
+		<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/header/logo.php")?>
 		<?$APPLICATION->IncludeComponent(
 			"bitrix:menu",
 			"header",
@@ -36,12 +36,12 @@
 		);?>
 
 		<div class="logos show-for-large">
-			<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/header_fox_logo.php")?>
-			<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/header_rostelecom_logo.php")?>
+			<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/header/fox_logo.php")?>
+			<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/header/rostelecom_logo.php")?>
 		</div>
 
         <div class="mobile-menu-link">
             <a href="#"><span class="icon-burger"></span>Меню</a>
         </div>
 	</header>
-    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/header_mobile_rostelecom_logo.php")?>
+    <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/header/mobile_rostelecom_logo.php")?>

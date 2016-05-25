@@ -14,7 +14,7 @@ $APPLICATION->SetPageProperty("main-block-class", "error-404-page")
 
 <div class="content">
 	<div class="error-404-wrapper">
-		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/404.php")?>
+		<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/404/404.php")?>
 	</div>
 </div>
 

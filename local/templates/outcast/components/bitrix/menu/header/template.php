@@ -17,6 +17,6 @@
                 </a>
             </li>
         <?endforeach?>
-        <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/header_menu_share.php")?>
+        <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/header/menu_share.php")?>
     </ul>
 </nav>

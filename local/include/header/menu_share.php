@@ -3,6 +3,6 @@
         <svg>
             <use xlink:href="#svg-icon-share"></use>
         </svg>
-        <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_share_popup.php")?>
+        <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/throw/share_popup.php")?>
     </span>
 </li>

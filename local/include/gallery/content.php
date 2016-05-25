@@ -3,8 +3,8 @@
 use Application\Base\Bitrix\Component\NewsList;
 use PhotoGallery\Model;
 
-include __DIR__ . "/gallery_declare_filter.php";
-include __DIR__ . "/gallery_declare_sort.php";
+include __DIR__ . "/declare_filter.php";
+include __DIR__ . "/declare_sort.php";
 
 global $galleryComponentSort, $galleryComponentFilter;
 

@@ -44,7 +44,7 @@
                     <use xlink:href="#svg-icon-share"></use>
                 </svg>
                 <span class="share-like-block-sharing-wrapper">
-                    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_share_buttons.php", $arItem["SHARE_PARAMS"])?>
+                    <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/throw/share_buttons.php", $arItem["SHARE_PARAMS"])?>
                 </span>
             </div>
         </div>

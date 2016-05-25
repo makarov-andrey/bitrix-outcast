@@ -8,9 +8,9 @@ $APPLICATION->SetPageProperty("main-block-class", "about-page")
 ?>
 
 <div class="content">
-    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/about_video.php")?>
-    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/about_description.php")?>
-    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_events_horizontal.php")?>
+    <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/about/video.php")?>
+    <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/about/description.php")?>
+    <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/throw/events_horizontal.php")?>
 </div>
 
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

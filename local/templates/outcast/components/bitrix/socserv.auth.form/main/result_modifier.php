@@ -8,11 +8,11 @@ $arResult["AUTH_SERVICES"] = array();
 foreach($arParams["~AUTH_SERVICES"] as $key => $arService) {
     switch ($key) {
         case "VKontakte":
-            $arService["ICON_FILE"] = SITE_TEMPLATE_PATH . "/include/throw_vk_icon.php";
+            $arService["ICON_FILE"] = PATH_TO_INCLUDE . "/throw/vk_icon.php";
             $arService["NAME"] = "ВКонтакте";
             break;
         case "Facebook":
-            $arService["ICON_FILE"] = SITE_TEMPLATE_PATH . "/include/throw_fb_icon.php";
+            $arService["ICON_FILE"] = PATH_TO_INCLUDE . "/throw/fb_icon.php";
             $arService["NAME"] = "Facebook";
             break;
     }

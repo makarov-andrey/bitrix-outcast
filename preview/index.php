@@ -16,7 +16,7 @@ $APPLICATION->SetPageProperty("main-block-class", "main-page");
             <h1><span>28 мая</span> в 5 городах</h1>
             <h2>Не упусти свой шанс увидеть первым новый сериал «Изгой»</h2>
             <?if(PreviewReservationModel::isUserBlocked()):?>
-                <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/preview_success_reservation.php")?>
+                <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/preview/success_reservation.php")?>
             <?else:?>
                 <?//На событие добавления этой формы соществует подписка в init.php
                 $formCode = PreviewReservationModel::FORM_CODE;
@@ -28,7 +28,7 @@ $APPLICATION->SetPageProperty("main-block-class", "main-page");
             <?endif?>
         </div>
     </div>
-    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_events_sidebar.php")?>
+    <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/throw/events_sidebar.php")?>
 </div>
 
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

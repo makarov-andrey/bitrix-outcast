@@ -3,13 +3,13 @@
  * @var CMain $APPLICATION
  */?>
 	<footer>
-		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_socials.php")?>
-		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_mobile_share.php")?>
-		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_fox_logo.php")?>
-		<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_copyright.php")?>
+		<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/footer/socials.php")?>
+		<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/footer/mobile_share.php")?>
+		<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/footer/fox_logo.php")?>
+		<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/footer/copyright.php")?>
 	</footer>
 </main>
 <div class="main-loader"></div>
-<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/footer_google_analytics.php")?>
+<?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/footer/google_analytics.php")?>
 </body>
 </html>

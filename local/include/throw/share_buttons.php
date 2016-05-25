@@ -19,8 +19,8 @@ if (isset($arParams["photo_id"])) {
 ?>
 
 <a href="#" class="js--vk-share"<?=$dataString?>>
-    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_vk_icon.php")?>
+    <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/throw/vk_icon.php")?>
 </a>
 <a href="#" class="js--fb-share"<?=$dataString?>>
-    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/throw_fb_icon.php")?>
+    <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/throw/fb_icon.php")?>
 </a>
