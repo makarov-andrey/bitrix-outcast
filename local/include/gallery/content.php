@@ -1,6 +1,6 @@
 <?
 /** @var CMain $APPLICATION */
-use Application\Base\Bitrix\Component\NewsList;
+use BitrixHelper\Component\NewsList;
 use PhotoGallery\Model;
 
 include __DIR__ . "/declare_filter.php";

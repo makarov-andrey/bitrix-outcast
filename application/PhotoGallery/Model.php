@@ -3,15 +3,14 @@
 namespace PhotoGallery;
 
 
-use Application\Base\Bitrix\IBlock;
-use Application\Base\Model as BaseModel;
+use Application\Base\Bitrix\Model\IBlockElement as BaseIBlockElementModel;
 use Application\Tools;
 use CIBlockElement;
 use CFile;
 use InvalidArgumentException;
 use User\Model as UserModel;
 
-class Model extends BaseModel
+class Model extends BaseIBlockElementModel
 {
     protected $dependencies = array("iblock");
 
@@ -23,19 +22,23 @@ class Model extends BaseModel
     const LIKES_AMOUNT_PROPERTY_CODE = "LIKES_AMOUNT";
 
     /**
-     * Возвращает фотографию по её id
-     *
-     * @param int $id
-     * @return array|null
+     * @return string
      */
-    public function findPhoto ($id)
+    public function getIBlockCode()
     {
-        $CIBlockElement = new CIBlockElement();
-        $dbResult = $CIBlockElement->GetByID($id);
-        $photo = $dbResult->Fetch();
-        $CFile = new CFile();
-        $photo["PICTURE_SRC"] = $CFile->GetPath($photo["DETAIL_PICTURE"]);
-        return $photo ?: null;
+        return static::IBLOCK_CODE;
+    }
+
+    /**
+     * @param array $photo
+     * @return array
+     */
+    public function formatDBResult ($photo) {
+        return array(
+            "ID" => $photo["ID"],
+            "NAME" => $photo["NAME"],
+            "PICTURE" => CFile::GetPath($photo["DETAIL_PICTURE"])
+        );
     }
 
     /**
@@ -51,13 +54,13 @@ class Model extends BaseModel
         Tools::assertValidId($photoId);
         $CIBlockElement = new CIBlockElement();
         $filter = array_merge(
-            self::getDefaultFilter(),
+            $this->getDefaultFilter(),
             array(
                 "ID" => $photoId,
-                "PROPERTY_" . self::LIKED_USERS_PROPERTY_CODE => $userId
+                "PROPERTY_" . static::LIKED_USERS_PROPERTY_CODE => $userId
             )
         );
-        $select = IBlock::getDefaultSelect();
+        $select = $this->getDefaultSelect();
         $dbResult = $CIBlockElement->GetList(array(), $filter, false, false, $select);
         $dbResult->NavStart(1);
         $result = $dbResult->fetch();
@@ -133,7 +136,7 @@ class Model extends BaseModel
      * @param int[] $likes
      */
     protected function saveLikes ($photoId, $likes) {
-        $iBlockId = self::getIBlockID();
+        $iBlockId = $this->getIBlockId();
         $likesAmount = count($likes);
         if (empty($likes)) {
             /*
@@ -145,7 +148,7 @@ class Model extends BaseModel
             $likes = false;
         }
         $values = array(
-            self::LIKED_USERS_PROPERTY_CODE => $likes,
+            static::LIKED_USERS_PROPERTY_CODE => $likes,
             /*
              * Т.к. в битриксе невозможно сортировать выборку элементов инфоблока по
              * количеству значений в множественном поле (в данном случае - поле с лайками
@@ -153,7 +156,7 @@ class Model extends BaseModel
              * всегда поддерживать поле количества лайков актуальным, чтобы можно было
              * по нему отсортировать.
              */
-            self::LIKES_AMOUNT_PROPERTY_CODE => $likesAmount
+            static::LIKES_AMOUNT_PROPERTY_CODE => $likesAmount
         );
         CIBlockElement::SetPropertyValuesEx($photoId, $iBlockId, $values);
     }
@@ -196,9 +199,9 @@ class Model extends BaseModel
     public function getUsersWhoLikesThePhoto ($photoId)
     {
         Tools::assertValidId($photoId);
-        $iBlockId = self::getIBlockID();
+        $iBlockId = $this->getIBlockId();
         $filter = array(
-            "CODE" => self::LIKED_USERS_PROPERTY_CODE
+            "CODE" => static::LIKED_USERS_PROPERTY_CODE
         );
         $dbResult = CIBlockElement::GetProperty($iBlockId, $photoId, "sort", "asc", $filter);
         $users = array();
@@ -239,26 +242,10 @@ class Model extends BaseModel
     /**
      * @return array
      */
-    public static function getDefaultFilter ()
-    {
-       return IBlock::getDefaultFilter(self::IBLOCK_CODE);
-    }
-
-    /**
-     * @return int|null
-     */
-    public static function getIBlockID ()
-    {
-        return IBlock::getIdByCode(self::IBLOCK_CODE);
-    }
-
-    /**
-     * @return array
-     */
-    public static function getDefaultSelect ()
+    public function getDefaultSelect ()
     {
         return array_merge(
-            IBlock::getDefaultSelect(),
+            parent::getDefaultSelect(),
             array(
                 "DETAIL_PICTURE"
             )

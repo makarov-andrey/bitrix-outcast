@@ -1,6 +1,6 @@
 <?
 /** @var CMain $APPLICATION; */
-use Application\Base\Bitrix\Component\NewsList;
+use BitrixHelper\Component\NewsList;
 
 //Поля сортировки
 $sorts = array(

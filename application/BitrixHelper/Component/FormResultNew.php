@@ -1,9 +1,8 @@
 <?php
 
-namespace Application\Base\Bitrix\Component;
+namespace BitrixHelper\Component;
 
-
-use Application\Base\Bitrix\WebForm;
+use BitrixHelper\API\WebForm as WebFormHelper;
 
 class FormResultNew
 {
@@ -18,7 +17,7 @@ class FormResultNew
     {
         return array(
             "SEF_MODE" => "N",
-            "WEB_FORM_ID" => WebForm::getIdByCode($webFormCode),
+            "WEB_FORM_ID" => WebFormHelper::getIdByCode($webFormCode),
             "LIST_URL" => "",
             "EDIT_URL" => "",
             "SUCCESS_URL" => "",

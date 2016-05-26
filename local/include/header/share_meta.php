@@ -5,9 +5,9 @@ $model = new PhotoGalleryModel();
 $image = "";
 $photoId = intval($_GET["share_photo_id"]);
 if ($photoId > 0) {
-	$photo = $model->findPhoto($photoId);
+	$photo = $model->getOne($photoId);
 	if (!is_null($photo)) {
-		$image = $photo["PICTURE_SRC"];
+		$image = $photo["PICTURE"];
 	}
 }
 if(empty($image)) {

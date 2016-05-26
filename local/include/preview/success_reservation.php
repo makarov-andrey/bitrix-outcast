@@ -5,10 +5,10 @@ use Preview\City\Model as CityModel;
 $reservationModel = new ReservationModel();
 $cityModel = new CityModel();
 
-$userResult = $reservationModel->findForCurrentUser();
+$userResult = $reservationModel->findOfCurrentUser();
 $city = null;
 if (!empty($userResult)) {
-    $city = $cityModel->find($userResult["city"]);
+    $city = $cityModel->getOne($userResult["city"]);
 }
 ?>
 <h2>

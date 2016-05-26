@@ -3,11 +3,10 @@
 namespace Preview\Reservation;
 
 
-use Application\Base\Bitrix\WebForm;
-use Application\Base\Model as BaseModel;
-use CFormResult;
+use Application\Base\Bitrix\Model\WebFormResult as BaseWebFormResultModel;
+use BitrixHelper\API\WebForm as WebFormHelper;
 
-class Model extends BaseModel
+class Model extends BaseWebFormResultModel
 {
     protected $dependencies = array("form");
 
@@ -15,10 +14,32 @@ class Model extends BaseModel
     const COOKIE_BLOCK_EXPIRE = 31536000; //365 дней
 
     const FORM_CODE = "preview";
+
     const CITY_QUESTION_CODE = "city";
     const FIO_QUESTION_CODE = "fio";
     const PHONE_QUESTION_CODE = "phone";
     const EMAIL_QUESTION_CODE = "email";
+
+    /**
+     * @return string
+     */
+    public function getWebFormCode()
+    {
+        return static::FORM_CODE;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getQuestionsCodes ()
+    {
+        return array(
+            static::CITY_QUESTION_CODE,
+            static::FIO_QUESTION_CODE,
+            static::PHONE_QUESTION_CODE,
+            static::EMAIL_QUESTION_CODE
+        );
+    }
 
     /**
      * Считает количество записавшихся на предзаказ пользователей
@@ -29,14 +50,10 @@ class Model extends BaseModel
      */
     public function countForCity($cityId)
     {
-        $CFormResult = new CFormResult();
-        $formId = WebForm::getIdByCode(self::FORM_CODE);
-        $by = "s_id";
-        $order = "asc";
         $filter = array(
             "FIELDS" => array(
                 array(
-                    "CODE" => self::CITY_QUESTION_CODE,
+                    "CODE" => static::CITY_QUESTION_CODE,
                     "FILTER_TYPE" => "integer",
                     "PARAMETER_NAME" => "USER",
                     "VALUE" => $cityId,
@@ -44,26 +61,7 @@ class Model extends BaseModel
                 )
             )
         );
-        $filtered = false;
-        $checkRights = "N";
-        $dbResult = $CFormResult->getList($formId, $by, $order, $filter, $filtered, $checkRights);
-        $dbResult->NavStart();
-        return $dbResult->NavRecordCount;
-    }
-
-
-    /**
-     * Возвращает результат web-формы резервации предпоказа по её id
-     *
-     * @param $id
-     * @return array|null
-     */
-    public function find ($id)
-    {
-        $CFormResult = new CFormResult();
-        $fields = self::getQuestionsCodes();
-        $result = $CFormResult->GetDataByID($id, $fields, $null, $null);
-        return $result ? self::formatDataByIdDBResult($result) : null;
+        return $this->count($filter);
     }
 
     /**
@@ -72,46 +70,13 @@ class Model extends BaseModel
      *
      * @return array|null
      */
-    public function findForCurrentUser ()
+    public function findOfCurrentUser ()
     {
-        if (!self::isUserBlocked()) {
+        if (!$this->isUserBlocked()) {
             return null;
         }
-        $reservationId = self::getUserReservationId();
-        return $this->find($reservationId);
-    }
-
-    /**
-     * создает массив из пар значений "код поля" => "значение" из массива,
-     * форматированного как результат выполнения метода CFormResult::GetDataByID()
-     *
-     * @param $result
-     * @return array
-     */
-    public static function formatDataByIdDBResult ($result)
-    {
-        $formattedResult = array();
-        foreach ($result as $code => $field) {
-            $answer = array_shift($field);
-            $formattedResult[$code] = $answer["USER_TEXT"];
-        }
-        return $formattedResult;
-    }
-
-    /**
-     * Вовзращает массив из мнемоник полей для web-формы резервации предпоказа.
-     * Может пригодиться для метода CFormResult::GetDataByID()
-     *
-     * @return array
-     */
-    public static function getQuestionsCodes ()
-    {
-        return array(
-            self::CITY_QUESTION_CODE,
-            self::FIO_QUESTION_CODE,
-            self::PHONE_QUESTION_CODE,
-            self::EMAIL_QUESTION_CODE
-        );
+        $reservationId = $this->getUserReservationId();
+        return $this->getOne($reservationId);
     }
 
     /**
@@ -122,7 +87,7 @@ class Model extends BaseModel
      */
     public static function blockCurrentUser ($id)
     {
-        setcookie(self::COOKIE_RESERVATION_KEY, $id, time() + self::COOKIE_BLOCK_EXPIRE);
+        setcookie(static::COOKIE_RESERVATION_KEY, $id, time() + static::COOKIE_BLOCK_EXPIRE);
     }
 
     /**
@@ -133,7 +98,7 @@ class Model extends BaseModel
      */
     public static function isUserBlocked ()
     {
-        return isset($_COOKIE[self::COOKIE_RESERVATION_KEY]);
+        return isset($_COOKIE[static::COOKIE_RESERVATION_KEY]);
     }
 
     /**
@@ -144,7 +109,7 @@ class Model extends BaseModel
      */
     public static function getUserReservationId ()
     {
-        return $_COOKIE[self::COOKIE_RESERVATION_KEY];
+        return $_COOKIE[static::COOKIE_RESERVATION_KEY];
     }
 
     /**
@@ -155,9 +120,9 @@ class Model extends BaseModel
      */
     public static function blockUserAfterSave ($webFormId, $resultId)
     {
-        $webFormCode = WebForm::getCodeById($webFormId);
-        if ($webFormCode == self::FORM_CODE) {
-            self::blockCurrentUser($resultId);
+        $webFormCode = WebFormHelper::getCodeById($webFormId);
+        if ($webFormCode == static::getWebFormCode()) {
+            static::blockCurrentUser($resultId);
         }
     }
 }

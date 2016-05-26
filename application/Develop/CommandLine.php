@@ -29,7 +29,7 @@ class CommandLine
      */
     public static function execute ($command)
     {
-        self::run($command, $response, $code);
+        static::run($command, $response, $code);
         if ($code != 0) {
             throw new LogicException($response, $code);
         }

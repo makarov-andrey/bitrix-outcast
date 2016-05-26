@@ -2,7 +2,7 @@
 /**  
  * @var CMain $APPLICATION 
  */
-use Application\Base\Bitrix\Component\FormResultNew;
+use BitrixHelper\Component\FormResultNew;
 use Preview\Reservation\Model as PreviewReservationModel;
 
 $APPLICATION->SetTitle("Предпоказ");

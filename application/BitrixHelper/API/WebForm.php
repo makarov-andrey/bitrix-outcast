@@ -1,7 +1,6 @@
 <?php
 
-namespace Application\Base\Bitrix;
-
+namespace BitrixHelper\API;
 
 use Application\Tools;
 use CForm;
@@ -44,7 +43,6 @@ class WebForm
         $arForm = $rsForm->Fetch();
         return $arForm ? $arForm["SID"] : null;
     }
-
 
     /**
      * Возвращает id вопроса веб-формы по его коду

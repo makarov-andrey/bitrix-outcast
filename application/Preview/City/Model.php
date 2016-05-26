@@ -2,56 +2,21 @@
 
 namespace Preview\City;
 
-use Application\Base\Bitrix\IBlock;
-use Application\Base\Model as BaseModel;
-use CIBlockElement;
+use Application\Base\Bitrix\Model\IBlockElement as BaseIBlockElementModel;
 
-class Model extends BaseModel
+class Model extends BaseIBlockElementModel
 {
-    protected $dependencies = array("iblock");
-
     const IBLOCK_CODE = "cities_for_preview";
 
     /**
-     * Возвращает список всех городов для предпоказа
-     *
-     * @return array
+     * @return string
      */
-    public function getAll ()
+    public function getIBlockCode ()
     {
-        $sort = self::getDefaultSort();
-        $filter = self::getDefaultFilter();
-        $select = self::getDefaultSelect();
-        $CIBlockElement = new CIBlockElement();
-        $dbResult = $CIBlockElement->GetList($sort, $filter, false, false, $select);
-        $cities = array();
-        while ($city = $dbResult->Fetch()) {
-            $cities[] = self::formatDBResult($city);
-        }
-        return $cities;
+        return static::IBLOCK_CODE;
     }
 
     /**
-     * достает запись из БД по id
-     *
-     * @param $id
-     * @return null
-     */
-    public function find ($id)
-    {
-        $filter = self::getDefaultFilter();
-        $filter["ID"] = $id;
-        $select = self::getDefaultSelect();
-        $CIBlockElement = new CIBlockElement();
-        $dbResult = $CIBlockElement->GetList(array(), $filter, false, false, $select);
-        $dbResult->NavStart(1);
-        $city = $dbResult->Fetch();
-        return $city ? self::formatDBResult($city) : null;
-    }
-
-    /**
-     * создает массив из алиасов для значений в свойствах и полях инфоблока
-     *
      * @param $city
      * @return array
      */
@@ -69,7 +34,7 @@ class Model extends BaseModel
     /**
      * @return array
      */
-    public static function getDefaultSort ()
+    public function getDefaultSort ()
     {
         return array(
             "SORT" => "ASC",
@@ -80,18 +45,10 @@ class Model extends BaseModel
     /**
      * @return array
      */
-    public static function getDefaultFilter ()
-    {
-        return IBlock::getDefaultFilter(self::IBLOCK_CODE);
-    }
-
-    /**
-     * @return array
-     */
-    public static function getDefaultSelect ()
+    public function getDefaultSelect ()
     {
         return array_merge(
-            IBlock::getDefaultSelect(),
+            parent::getDefaultSelect(),
             array(
                 "PROPERTY_RESERVATIONS_AMOUNT",
                 "PROPERTY_ADDRESS",
