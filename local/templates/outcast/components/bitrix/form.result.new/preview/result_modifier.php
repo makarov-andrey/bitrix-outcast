@@ -13,7 +13,7 @@ foreach ($arResult["QUESTIONS"] as $code => &$arQuestion) {
     $arQuestion["INPUT_NAME"] = "form_" . $arQuestion["TYPE"] . "_" . $arQuestion["STRUCTURE"][0]["ID"];
     if ($code == "city") {
         $arQuestion["TYPE"] = "cities";
-        $arQuestion["CITIES"] = $cityModel->getAll();
+        $arQuestion["CITIES"] = $cityModel->getList();
         foreach ($arQuestion["CITIES"] as &$city) {
             $city["RESERVATIONS_EXPIRE"] = $reservationModel->countForCity($city["ID"]);
             $city["RESERVATIONS_BALANCE"] = $city["RESERVATIONS_AMOUNT"] - $city["RESERVATIONS_EXPIRE"];

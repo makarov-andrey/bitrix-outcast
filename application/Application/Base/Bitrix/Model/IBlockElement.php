@@ -8,18 +8,28 @@ use CIBlockElement;
 abstract class IBlockElement extends IBlock
 {
     /**
-     * Возвращает список всех элементов из инфоблока
+     * Возвращает массив элементов из инфоблока
      *
+     * @param array $additionalFilter
+     * @param array $sort
+     * @param int $limit
+     * @param int $page
      * @return array
      */
-    public function getAll ()
+    public function getList($additionalFilter = array(), $sort = null, $limit = 0, $page = 1)
     {
-        $sort = $this->getDefaultSort();
+        if (is_null($sort)) {
+            $sort = $this->getDefaultSort();
+        }
+
         $filter = $this->getDefaultFilter();
+        $filter = array_merge($filter, $additionalFilter);
+
         $select = $this->getDefaultSelect();
 
         $CIBlockElement = new CIBlockElement();
         $dbResult = $CIBlockElement->GetList($sort, $filter, false, false, $select);
+        $dbResult->NavStart($limit, true, $page);
 
         $elements = array();
         while ($element = $dbResult->Fetch()) {
@@ -34,7 +44,7 @@ abstract class IBlockElement extends IBlock
      * @param int $id
      * @return null
      */
-    public function getOne ($id)
+    public function getOne($id)
     {
         Tools::assertValidId($id);
 
@@ -59,7 +69,8 @@ abstract class IBlockElement extends IBlock
      * @param $section
      * @return array
      */
-    public function formatDBResult ($section) {
+    public function formatDBResult($section)
+    {
         return $section;
     }
 }
