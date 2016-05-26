@@ -18,13 +18,7 @@ $APPLICATION->SetPageProperty("main-block-class", "main-page");
             <?if(PreviewReservationModel::isUserBlocked()):?>
                 <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/preview/success_reservation.php")?>
             <?else:?>
-                <?//На событие добавления этой формы соществует подписка в init.php
-                $formCode = PreviewReservationModel::FORM_CODE;
-                $APPLICATION->IncludeComponent(
-                    "bitrix:form.result.new",
-                    "preview",
-                    FormResultNew::getDefaultParams($formCode)
-                );?>
+                <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/preview/reservation_has_gone.php")?>
             <?endif?>
         </div>
     </div>
