@@ -15,7 +15,15 @@ $APPLICATION->SetPageProperty("main-block-class", "main-page");
             <h3 class="text-uppercase">Предпремьерный показ пилотной серии</h3>
             <h1><span>28 мая</span> в 5 городах</h1>
             <h2>Не упусти свой шанс увидеть первым новый сериал «Изгой»</h2>
-            <?if(PreviewReservationModel::isUserBlocked()):?>
+            <?
+            /*
+             * 27.05 пришла задача разрешить возможность пользователям бронировать
+             * предпаказ неограниченное количество раз, то есть снять это ограничение.
+             * Чтобы применить его снова нужно вместо проверки formresult поставить
+             * проверку на PreviewReservationModel::isUserBlocked()
+             */
+            ?>
+            <?if($_REQUEST["formresult"] == "addok"):?>
                 <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH . "/include/preview_success_reservation.php")?>
             <?else:?>
                 <?//На событие добавления этой формы соществует подписка в init.php
