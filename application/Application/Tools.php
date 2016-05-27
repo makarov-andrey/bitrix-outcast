@@ -64,4 +64,14 @@ class Tools
             throw new InvalidArgumentException("Параметр id должен быть больше 0");
         }
     }
+
+    /**
+     * Проверяет является ли метод запроса POST
+     *
+     * @return bool
+     */
+    public static function isPostRequestMethod ()
+    {
+        return $_SERVER["REQUEST_METHOD"] == "post";
+    }
 }
