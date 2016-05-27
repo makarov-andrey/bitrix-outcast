@@ -11,10 +11,6 @@ $aMenuLinks = Array(
         )
     ),
     array(
-        "Фотоконкурс",
-        "photo-contest/"
-    ),
-    array(
         "Правила",
         "rules/"
     ),
