@@ -24,3 +24,4 @@ if (!empty($userResult)) {
         <?endif?>
     <?endif?>
 </h2>
+<h3>Если вам не пришло письмо-подтверждение брони, направьте запрос с указанного вами адреса на <a href="mailto:outcast@articul.ru">outcast@articul.ru</a></h3>
