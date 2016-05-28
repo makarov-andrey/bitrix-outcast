@@ -11,7 +11,8 @@ $APPLICATION->IncludeComponent(
             "NEWS_COUNT" => 999,
             "PROPERTY_CODE" => array(
                 "LINK",
-                "ICON"
+                "ICON",
+                "GONE"
             )
         )
     )
