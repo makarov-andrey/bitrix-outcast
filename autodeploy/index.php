@@ -1,5 +1,5 @@
 <?php
-require_once $_SERVER["DOCUMENT_ROOT"] . "/application/bootstrap.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . "/application/autoload.php";
 require_once __DIR__ . "/gitignore_config.php";
 
 if (!defined("AUTO_DEPLOY_TOKEN") || $_GET["token"] != AUTO_DEPLOY_TOKEN) {
