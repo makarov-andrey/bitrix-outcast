@@ -3,5 +3,5 @@
         <use xlink:href="#svg-icon-picture"></use>
     </svg>
     <span>Участвуй <br> в фотоконкурсе <br> и выигрывай призы!</span>
-    <a href="#">Подробнее</a>
+    <a href="/photo-contest/">Подробнее</a>
 </div>

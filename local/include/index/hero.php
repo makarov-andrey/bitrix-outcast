@@ -6,11 +6,11 @@
             Москва, Санкт-Петербург, Пермь, <br>
             Краснодар, Нижний Новгород</h5>
         <br>
-        <div class="transparent-btn">
+        <a href="/photo-contest/" class="transparent-btn">
             <svg class="icon">
                 <use xlink:href="#svg-icon-picture"></use>
             </svg>
             <span>Участвуй в фотоконкурсе <br> и выигрывай призы!</span>
-        </div>
+        </a>
     </div>
 </div>
