@@ -1,16 +1,23 @@
-<div class="hero-block">
+<?
+use PhotoGallery\NewsListHelper as PhotoGalleryNewsListHelper;
+use PhotoGallery\Model;
+
+$iBlockCode = Model::IBLOCK_CODE;
+$iBlockType = Model::IBLOCK_TYPE;
+?>
+<div class="hero-block hero-block-gallery">
     <div class="hero-block-inner">
-        <h1><span>Узнай</span> все тайны <span>Изгоя</span></h1>
-        <h2>Бронирование билетов на предпремьерный показ сериала завершено</h2>
-        <h5>Показы пройдут 28 мая в следующих городах: <br>
-            Москва, Санкт-Петербург, Пермь, <br>
-            Краснодар, Нижний Новгород</h5>
-        <br>
-        <a href="/photo-contest/" class="transparent-btn">
-            <svg class="icon">
-                <use xlink:href="#svg-icon-picture"></use>
-            </svg>
-            <span>Участвуй в фотоконкурсе <br> и выигрывай призы!</span>
-        </a>
+        <h1>Фотоконкурс</h1>
+        <h2>Участвуй в акции в торговых центрах своего города</h2>
+
+        <?$APPLICATION->IncludeComponent(
+            "bitrix:news.list",
+            "index_photo_gallery",
+            PhotoGalleryNewsListHelper::getDefaultParams()
+        );?>
+
+        <p><b>Набери больше всех баллов и выиграй приз —
+            футболку с Изгоем.</b></p>
+        <a href="/photo-contest/" class="blue-btn">Подробнее</a>
     </div>
 </div>

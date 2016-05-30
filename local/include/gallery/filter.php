@@ -32,6 +32,7 @@ switch ($_GET["sort"]) {
             array_merge(
                 NewsList::getDefaultParams("photogallery", "photogallery_cities"),
                 array(
+                    "CACHE_TYPE" => "N",
                     "NEWS_COUNT" => 999,
                     "SORT_BY1" => "SORT",
                     "SORT_ORDER1" => "ASC",

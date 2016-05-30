@@ -177,6 +177,23 @@ function initGallery () {
     var $gallery = $(".gallery");
 
     /**
+     * Открытие картинки по хештегу в url
+     */
+    var openedByLocationHash = false;
+    function openByLocationHash () {
+        var photoSelector = location.hash;
+        if (!photoSelector.length) {
+            return;
+        }
+        var $photo = $(photoSelector);
+        console.log(photoSelector, $photo.length);
+        if (!$photo.length) {
+            return;
+        }
+        $photo.find(".gallery-item-image").trigger("click");
+    };
+
+    /**
      * Лайк фотографий
      */
     (function(){
@@ -272,6 +289,12 @@ function initGallery () {
                         $gallery.removeClass("can-load-content");
                     }
                     initColorBox();
+
+                    if (!openedByLocationHash) {
+                        openedByLocationHash = true;
+                        openByLocationHash();
+                        location.hash = "";
+                    }
                 },
                 error: defaultAjaxErrorHandler
             });

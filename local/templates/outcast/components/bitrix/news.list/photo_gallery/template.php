@@ -25,8 +25,8 @@
 <?endif?>
 
 <?foreach($arResult["ITEMS"] as $arItem):?>
-    <div class="gallery-item column">
-        <a href="<?=$arItem["DETAIL_PICTURE"]["SRC"]?>" class="gallery-item-image" data-name="Артём">
+    <div class="gallery-item column" id="photo-<?=$arItem["ID"]?>">
+        <a href="<?=$arItem["DETAIL_PICTURE"]["SRC"]?>" class="gallery-item-image" data-name="<?=$arItem["NAME"]?>">
             <img src="<?=$arItem["DISPLAY_PICTURE"]["src"]?>" alt="test">
         </a>
         <span class="gallery-item-name"><?=$arItem["NAME"]?></span>
