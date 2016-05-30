@@ -8,24 +8,34 @@ use CIBlockSection;
 abstract class IBlockSection extends IBlock
 {
     /**
-     * Возвращает список всех элементов из инфоблока
+     * Возвращает массив секций из инфоблока
      *
+     * @param array $additionalFilter
+     * @param array|null $sort
+     * @param int $limit
+     * @param int $page
      * @return array
      */
-    public function getAll ()
+    public function getList($additionalFilter = array(), $sort = null, $limit = 0, $page = 1)
     {
-        $sort = $this->getDefaultSort();
+        if (is_null($sort)) {
+            $sort = $this->getDefaultSort();
+        }
+
         $filter = $this->getDefaultFilter();
+        $filter = array_merge($filter, $additionalFilter);
+
         $select = $this->getDefaultSelect();
 
         $CIBlockElement = new CIBlockSection();
         $dbResult = $CIBlockElement->GetList($sort, $filter, false, $select);
+        $dbResult->NavStart($limit, true, $page);
 
-        $sections = array();
-        while ($section = $dbResult->Fetch()) {
-            $sections[] = $this->formatDBResult($section);
+        $elements = array();
+        while ($element = $dbResult->Fetch()) {
+            $elements[] = $this->formatDBResult($element);
         }
-        return $sections;
+        return $elements;
     }
 
     /**
