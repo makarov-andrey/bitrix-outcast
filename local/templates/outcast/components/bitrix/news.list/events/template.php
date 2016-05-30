@@ -4,10 +4,16 @@
  */
 ?>
 <?foreach($arResult["ITEMS"] as $arItem):?>
+    <?
+    $addClasses = $arItem["PROPERTIES"]["ICON"]["VALUE_XML_ID"];
+    if ($arItem["PROPERTIES"]["GONE"]["VALUE_XML_ID"] == "Y") {
+        $addClasses .= " gone";
+    }
+    ?>
     <?if(!empty($arItem["PROPERTIES"]["LINK"]["VALUE"])):?>
-        <a class="events-item <?=$arItem["PROPERTIES"]["ICON"]["VALUE_XML_ID"]?>" href="<?=$arItem["PROPERTIES"]["LINK"]["VALUE"]?>">
+        <a class="events-item <?=$addClasses?>" href="<?=$arItem["PROPERTIES"]["LINK"]["VALUE"]?>">
     <?else:?>
-        <div class="events-item <?=$arItem["PROPERTIES"]["ICON"]["VALUE_XML_ID"]?>">
+        <div class="events-item <?=$addClasses?>">
     <?endif?>
 
         <?if(!empty($arItem["ACTIVE_FROM_FORMATTED"]) || !empty($arItem["ACTIVE_TO_FORMATTED"])):?>

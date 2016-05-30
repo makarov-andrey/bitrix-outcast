@@ -15,7 +15,7 @@ class Notification
     /**
      * Эмейлы, на которые надо отправить оповещение
      *
-     * @var array
+     * @var string[]
      */
     public static $emails = array(
         "mr.wertmax@gmail.com"
@@ -29,7 +29,7 @@ class Notification
      */
     public static function notify ($subject = "", $message = "")
     {
-        self::sendEmails($subject, $message);
+        static::sendEmails($subject, $message);
     }
 
     /**
@@ -41,7 +41,7 @@ class Notification
     public static function sendEmails ($subject = "", $message = "")
     {
         $subject = $_SERVER[""] . $subject;
-        foreach (self::$emails as $email) {
+        foreach (static::$emails as $email) {
             mail($email, $subject, $message);
         }
     }

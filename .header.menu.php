@@ -11,10 +11,6 @@ $aMenuLinks = Array(
         )
     ),
     array(
-        "Премьерные показы",
-        "preview/"
-    ),
-    array(
         "Правила",
         "rules/"
     ),

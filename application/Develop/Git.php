@@ -7,11 +7,6 @@ use LogicException;
 
 class Git
 {
-    /**
-     * Ошибка, которую возвращает git, когда существует файл .lock
-     */
-    const ERROR_CODE__BUSY = 128;
-
     const REMOTE_REPOSITORY = "origin";
 
     /**
@@ -45,8 +40,8 @@ class Git
      */
     public static function pull ()
     {
-        $branch = self::getCurrentBrunch();
-        $repository = self::REMOTE_REPOSITORY;
+        $branch = static::getCurrentBrunch();
+        $repository = static::REMOTE_REPOSITORY;
         return CommandLine::execute("git pull $repository $branch");
     }
 
@@ -62,8 +57,8 @@ class Git
      */
     public static function forcePull ()
     {
-        $branch = self::getCurrentBrunch();
-        $repository = self::REMOTE_REPOSITORY;
+        $branch = static::getCurrentBrunch();
+        $repository = static::REMOTE_REPOSITORY;
         CommandLine::execute("git fetch --all");
         CommandLine::execute("git reset --hard $repository/$branch");
     }
@@ -75,7 +70,7 @@ class Git
      */
     public static function isBusy ()
     {
-        $path = self::getDirectoryPath();
+        $path = static::getDirectoryPath();
         return file_exists($path . "/.git/index.lock");
     }
 }

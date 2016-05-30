@@ -31,7 +31,7 @@ class Tools
      */
     public static function includeModules ($modules)
     {
-        self::wrapArrayIfNotItIs($modules);
+        static::wrapArrayIfNotItIs($modules);
         foreach ($modules as $module) {
             $result = CModule::IncludeModule($module);
             if (!$result) {

@@ -5,10 +5,10 @@ use Preview\City\Model as CityModel;
 $reservationModel = new ReservationModel();
 $cityModel = new CityModel();
 
-$userResult = $reservationModel->findForCurrentUser();
+$userResult = $reservationModel->findOfCurrentUser();
 $city = null;
 if (!empty($userResult)) {
-    $city = $cityModel->find($userResult["city"]);
+    $city = $cityModel->getOne($userResult["city"]);
 }
 ?>
 <h2>
@@ -24,3 +24,4 @@ if (!empty($userResult)) {
         <?endif?>
     <?endif?>
 </h2>
+<h3>Если вам не пришло письмо-подтверждение брони, направьте запрос с указанного вами адреса на <a href="mailto:outcast@articul.ru">outcast@articul.ru</a></h3>

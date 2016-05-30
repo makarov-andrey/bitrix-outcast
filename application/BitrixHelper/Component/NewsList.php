@@ -1,9 +1,8 @@
 <?php
 
-namespace Application\Base\Bitrix\Component;
+namespace BitrixHelper\Component;
 
-
-use Application\Base\Bitrix\IBlock;
+use BitrixHelper\API\IBlock as IBlockHelper;
 
 class NewsList
 {
@@ -19,7 +18,7 @@ class NewsList
     {
         return array(
             "IBLOCK_TYPE" => $IBlockType,
-            "IBLOCK_ID" => IBlock::getIdByCode($IBlockCode),
+            "IBLOCK_ID" => IBlockHelper::getIdByCode($IBlockCode),
             "AJAX_MODE" => "N",
             "NEWS_COUNT" => 20,
             "SORT_BY1" => "SORT",

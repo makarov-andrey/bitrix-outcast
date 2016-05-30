@@ -21,8 +21,8 @@ class Deploy
 
     /**
      * Деплой проекта с помощью git. Если git занят другим процессом, то ждет
-     * self::$tryDelay секунд и пытается еще раз. Всего пытается деплоить
-     * self::$tryAmount раз. Если гит занят слишком долго - выбрасывает LogicException
+     * static::$tryDelay секунд и пытается еще раз. Всего пытается деплоить
+     * static::$tryAmount раз. Если гит занят слишком долго - выбрасывает LogicException
      *
      * @param bool $force
      * @return void
@@ -33,11 +33,11 @@ class Deploy
         $i = 0;
         while (Git::isBusy()) {
             $i++;
-            if ($i >= self::$tryAmount) {
-                $delay = $i * self::$tryDelay;
+            if ($i >= static::$tryAmount) {
+                $delay = $i * static::$tryDelay;
                 throw new LogicException("Git is busy for $delay seconds");
             }
-            sleep(self::$tryDelay);
+            sleep(static::$tryDelay);
         }
         if ($force === true) {
             Git::forcePull();

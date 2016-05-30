@@ -22,3 +22,8 @@
 .auth-popup {
     z-index: 10000;
 }
+
+.events-item.gone {
+    color: #fff;
+    opacity: .5;
+}
