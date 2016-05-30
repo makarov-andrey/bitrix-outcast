@@ -19,6 +19,7 @@ $APPLICATION->IncludeComponent(
         NewsList::getDefaultParams($iBlockType, $iBlockCode),
         $galleryComponentSort,
         array(
+            "CACHE_TYPE" => "N",
             "FIELD_CODE" => array("DETAIL_PICTURE"),
             "NEWS_COUNT" => 12,
             "FILTER_NAME" => "galleryComponentFilter"
