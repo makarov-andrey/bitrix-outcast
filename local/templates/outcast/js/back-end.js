@@ -192,7 +192,7 @@ function initGallery () {
                         defaultAjaxErrorHandler();
                         return;
                     }
-                    $ctx.toggleClass("liked");
+                    $ctx.addClass("liked").removeClass("js--like");
                     $ctx.find(".likes-count").html(response.amount);
                 },
                 error: defaultAjaxErrorHandler

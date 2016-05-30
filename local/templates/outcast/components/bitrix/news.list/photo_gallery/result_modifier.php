@@ -13,6 +13,8 @@ $pictureSizes = array(
     "height" => 256
 );
 
+$authorized = $USER->IsAuthorized();
+
 foreach ($arResult["ITEMS"] as &$arItem) {
     $arItem["DISPLAY_PICTURE"] = $CFile->ResizeImageGet($arItem["DETAIL_PICTURE"], $pictureSizes, BX_RESIZE_IMAGE_EXACT);
     $arItem["LIKED"] = $model->isCurrentUserLiked($arItem["ID"]);
@@ -21,11 +23,13 @@ foreach ($arResult["ITEMS"] as &$arItem) {
         "photo_id" => $arItem["ID"],
         "image" => "http://" . $_SERVER["SERVER_NAME"] . $arItem["DETAIL_PICTURE"]["SRC"],
     );
+
+    if (!$authorized) {
+        $arItem["LIKE_CLASS"] = "js--authorize";
+    } elseif(!$arItem["LIKED"]) {
+        $arItem["LIKE_CLASS"] = "js--like";
+    } else {
+        $arItem["LIKE_CLASS"] = "";
+    }
 }
 unset($arItem);
-
-if ($USER->IsAuthorized()) {
-    $arResult["LIKE_CLASS"] = "js--like";
-} else {
-    $arResult["LIKE_CLASS"] = "js--authorize";
-}

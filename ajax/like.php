@@ -9,7 +9,7 @@ $output = array(
 try {
     $model = new Model();
     $photoId = intval($_GET["photo_id"]);
-    $model->toggleCurrentUserLike($photoId);
+    $model->likeByCurrentUser($photoId);
     $output["amount"] = $model->countLikes($photoId);
 } catch (InvalidArgumentException $exception) {
     $output["success"] = false;

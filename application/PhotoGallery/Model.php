@@ -94,6 +94,18 @@ class Model extends BaseIBlockElementModel
     }
 
     /**
+     * Сохраняет лайк от  текущего пользователя для фотографии
+     *
+     * @param int $photoId
+     * @param int $userId
+     */
+    public function likeByCurrentUser ($photoId)
+    {
+        $userId = UserModel::getCurrentUserId();
+        $this->like($photoId, $userId);
+    }
+
+    /**
      * Сохраняет лайк от пользователя для фотографии, не делая проверок
      *
      * @param int $photoId
@@ -182,11 +194,9 @@ class Model extends BaseIBlockElementModel
      *
      * @param int $photoId
      */
-    public function toggleCurrentUserLike ($photoId)
+    public function toggleLikeByCurrentUser ($photoId)
     {
-        global $USER;
-        UserModel::assertUserAuthorized();
-        $userId = $USER->GetID();
+        $userId = UserModel::getCurrentUserId();
         $this->toggleLike($photoId, $userId);
     }
 

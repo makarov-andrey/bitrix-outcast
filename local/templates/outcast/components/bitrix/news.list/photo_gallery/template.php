@@ -31,11 +31,19 @@
         </a>
         <span class="gallery-item-name"><?=$arItem["NAME"]?></span>
         <div class="share-like-block">
-            <a class="share-like-block-side <?=$arResult["LIKE_CLASS"]?> <?=($arItem["LIKED"] ? "liked" : "")?>" data-photo-id="<?=$arItem["ID"]?>">
-                <svg class="icon">
-                    <use xlink:href="#svg-icon-like"></use>
-                </svg>
-                <b class="like-index">1</b>
+            <a class="share-like-block-side <?=$arItem["LIKE_CLASS"]?> <?=($arItem["LIKED"] ? "liked" : "")?>" data-photo-id="<?=$arItem["ID"]?>">
+                <span class="plus-one-icon">
+                    <svg class="icon">
+                        <use xlink:href="#svg-icon-like"></use>
+                    </svg>
+                    <b>+1</b>
+                </span>
+                <span class="liked-icon">
+                    <svg class="icon">
+                        <use xlink:href="#svg-icon-check"></use>
+                    </svg>
+                </span>
+        
                 <span class="likes-count"><?=$arItem["LIKES_AMOUNT"]?></span>
             </a>
 

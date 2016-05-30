@@ -6,18 +6,6 @@
     display: none;
 }
 
-.share-like-block-side .like-index:before {
-    content: "+";
-    display: inline-block;
-    font-weight: bold;
-    width: 8px;
-    text-align: right;
-}
-
-.share-like-block-side.liked .like-index:before {
-    content: "-";
-}
-
 .auth-popup-outer,
 .auth-popup {
     z-index: 10000;

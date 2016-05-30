@@ -13,4 +13,11 @@ class Model
             throw new InvalidArgumentException("Пользователь не авторизован");
         }
     }
+
+    public static function getCurrentUserId ()
+    {
+    	self::assertUserAuthorized();
+    	global $USER;
+    	return $USER->GetID();
+    }
 }
