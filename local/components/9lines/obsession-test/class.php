@@ -61,7 +61,7 @@ class ObsessionTestController extends CBitrixComponent
      */
     public function executeComponent()
     {
-        $this->questions = $this->obsessionModel->getList();
+        $this->questions = $this->questionModel->getList();
         $this->processPost();
         $this->obsession = $this->obsessionModel->getCurrentUserResult();
         $this->completed = !is_null($this->obsession);
@@ -149,14 +149,13 @@ class ObsessionTestController extends CBitrixComponent
      */
     public function includeTemplate()
     {
-        $this->arResult["completed"] = $this->completed;
-        $this->arResult["questions"] = $this->questions;
-        $this->arResult["obsession"] = $this->obsession;
         if ($this->completed) {
-            $template = "result.php";
+            $this->arResult["OBSESSION"] = $this->obsession;
+            $templateName = "result";
         } else {
-            $template = "template.php";
+            $this->arResult["QUESTIONS"] = $this->questions;
+            $templateName = "template";
         }
-        $this->includeComponentTemplate($template);
+        $this->includeComponentTemplate($templateName);
     }
 }

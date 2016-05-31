@@ -25,7 +25,7 @@ class Model extends BaseIBlockElementModel
     public function getCurrentUserResult ()
     {
         $id = $this->getCurrentUserResultId();
-        return $this->getOne($id);
+        return is_null($id) ? null : $this->getOne($id);
     }
 
     /**

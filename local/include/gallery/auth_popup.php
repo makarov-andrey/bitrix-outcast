@@ -27,17 +27,7 @@ if ($userAuthorized && $_SESSION["show_thank_you_auth"]) {
                 через свою любимую социальную сеть, <br>
                 чтобы участвовать в голосовании</h2>
 
-            <?$APPLICATION->IncludeComponent(
-                "bitrix:system.auth.form",
-                "",
-                Array(
-                    "REGISTER_URL" => "",
-                    "FORGOT_PASSWORD_URL" => "",
-                    "PROFILE_URL" => "",
-                    "SHOW_ERRORS" => "N",
-                ),
-                false
-            );?>
+            <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/throw/auth_component.php")?>
         <?endif?>
     </div>
 </div>
