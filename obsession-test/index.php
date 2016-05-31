@@ -5,7 +5,7 @@
  */
 
 $APPLICATION->SetTitle("Тест");
-$APPLICATION->SetPageProperty("main-block-class", "main-page")
+$APPLICATION->SetPageProperty("main-block-class", "test-page")
 ?>
 
 <div class="content">
@@ -17,6 +17,7 @@ $APPLICATION->SetPageProperty("main-block-class", "main-page")
             ""
         )?>
     <?endif?>
+    <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/throw/events_sidebar.php")?>
 </div>
 
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

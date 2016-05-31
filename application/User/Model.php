@@ -2,7 +2,10 @@
 
 namespace User;
 
+use Application\Tools;
 use InvalidArgumentException;
+use CUser;
+use CFile;
 
 class Model
 {
@@ -29,5 +32,39 @@ class Model
             return null;
         }
     	return $USER->GetID();
+    }
+
+    /**
+     * Возвращает адрес к фотографии пользователя
+     *
+     * @param $userId
+     * @return string|null
+     */
+    public static function getAvatarId ($userId) {
+        Tools::assertValidId($userId);
+        $CUser = new CUser;
+        $by = "id";
+        $order = "asc";
+        $filter = array(
+            "ID" => $userId
+        );
+        $params = array(
+            "FIELDS" => "PERSONAL_PHOTO"
+        );
+        $dbResult = $CUser->GetList($by, $order, $filter, $params);
+        $user = $dbResult->Fetch();
+        return $user["PERSONAL_PHOTO"] ?: null;
+    }
+
+
+    /**
+     * Возвращает адрес к фотографии текущего пользователя
+     *
+     * @return string|null
+     */
+    public static function getCurrentUserAvatarId ()
+    {
+        $userId = self::getCurrentUserId();
+        return is_null($userId) ? null : self::getAvatarId($userId);
     }
 }
