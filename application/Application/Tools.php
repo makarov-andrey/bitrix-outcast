@@ -72,6 +72,6 @@ class Tools
      */
     public static function isPostRequestMethod ()
     {
-        return $_SERVER["REQUEST_METHOD"] == "post";
+        return $_SERVER["REQUEST_METHOD"] == "POST";
     }
 }

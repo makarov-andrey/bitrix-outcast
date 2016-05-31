@@ -16,7 +16,7 @@ abstract class IBlockElement extends IBlock
      * @param int $page
      * @return array
      */
-    public function getList($additionalFilter = array(), $sort = null, $limit = 0, $page = 1)
+    public function getList($additionalFilter = array(), $sort = null, $limit = 1000000, $page = 1)
     {
         if (is_null($sort)) {
             $sort = $this->getDefaultSort();
@@ -33,8 +33,7 @@ abstract class IBlockElement extends IBlock
 
         $elements = array();
         while ($element = $dbResult->Fetch()) {
-            $elementId = $element["ID"];
-            $elements[$elementId] = $this->formatDBResult($element);
+            $elements[] = $this->formatDBResult($element);
         }
         return $elements;
     }

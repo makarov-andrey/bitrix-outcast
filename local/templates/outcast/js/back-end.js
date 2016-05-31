@@ -311,3 +311,24 @@ $(function(){
         initGallery();
     }
 });
+
+/**
+ * Тест одержимости
+ */
+$(function(){
+    $(".obsession-test-form").on("submit", function(){
+        var $questions = $(".question"),
+            $activeQuestion = $questions.filter(".active"),
+            index = $activeQuestion.index();
+        if ($activeQuestion.find("input[type=radio]:checked").length <= 0) {
+            return false;
+        }
+        if (index >= $questions.length) {
+            return true;
+        }
+        $(".question-num .current").html(index + 1);
+        $questions.removeClass("active")
+            .eq(index).addClass("active");
+        return false;
+    });
+});

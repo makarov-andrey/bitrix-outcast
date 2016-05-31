@@ -11,6 +11,10 @@ $aMenuLinks = Array(
         )
     ),
     array(
+        "Тест одержимости",
+        "obsession-test/"
+    ),
+    array(
         "Фотоконкурс",
         "photo-contest/"
     ),

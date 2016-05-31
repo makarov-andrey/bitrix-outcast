@@ -15,3 +15,11 @@
     color: #fff;
     opacity: .5;
 }
+
+.test-block .question {
+    display: none;
+}
+
+.test-block .question.active {
+    display: block;
+}

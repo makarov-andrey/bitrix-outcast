@@ -81,11 +81,11 @@ class ObsessionTestController extends CBitrixComponent
             $this->assertValidAnswerInPost($question);
             $answerId = $this->getAnswerIdFromPost($question);
             $answer = $question["ANSWER_VARIANTS"][$answerId];
-            foreach ($answer["OBSESSION_POINTS"] as $point) {
-                if (!isset($obsessionPoints[$point])) {
-                    $obsessionPoints[$point] = 0;
+            foreach ($answer["OBSESSIONS_IDS"] as $obsessionId) {
+                if (!isset($obsessionPoints[$obsessionId])) {
+                    $obsessionPoints[$obsessionId] = 0;
                 }
-                $obsessionPoints[$point]++;
+                $obsessionPoints[$obsessionId]++;
             }
         }
         $maxPoint = max($obsessionPoints);
@@ -102,7 +102,7 @@ class ObsessionTestController extends CBitrixComponent
     {
         return Tools::isPostRequestMethod()
             && isset($_POST["obsession_test"])
-            && $this->obsessionModel->currentUserHasResult();
+            && !$this->obsessionModel->currentUserHasResult();
     }
 
     /**

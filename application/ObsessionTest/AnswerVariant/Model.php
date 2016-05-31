@@ -6,7 +6,7 @@ use Application\Base\Bitrix\Model\IBlockElement as BaseIBlockElementModel;
 
 class Model extends BaseIBlockElementModel
 {
-    const IBLOCK_CODE = "obsessions";
+    const IBLOCK_CODE = "obsession_test_questions";
 
     /**
      * @return string
@@ -23,7 +23,7 @@ class Model extends BaseIBlockElementModel
      * @param int $page
      * @return array
      */
-    public function getList($additionalFilter = array(), $sort = null, $limit = 0, $page = 1)
+    public function getList($additionalFilter = array(), $sort = null, $limit = 1000000, $page = 1)
     {
         $answerVariants = parent::getList($additionalFilter, $sort, $limit, $page);
         $grouped = array();
@@ -31,10 +31,10 @@ class Model extends BaseIBlockElementModel
             $variantId = $variant["ID"];
             if (!isset($grouped[$variantId])) {
                 $grouped[$variantId] = $variant;
-                unset($grouped[$variantId]["OBSESSION"]);
-                $grouped[$variantId]["OBSESSION_POINTS"] = array();
+                unset($grouped[$variantId]["OBSESSION_ID"]);
+                $grouped[$variantId]["OBSESSIONS_IDS"] = array();
             }
-            $grouped[$variantId]["OBSESSION_POINTS"][] = $variant["OBSESSION"];
+            $grouped[$variantId]["OBSESSIONS_IDS"][] = $variant["OBSESSION_ID"];
         }
         return $grouped;
     }
@@ -68,7 +68,7 @@ class Model extends BaseIBlockElementModel
         return array_merge(
             parent::getDefaultSelect(),
             array(
-                "SECTION_ID",
+                "IBLOCK_SECTION_ID",
                 "PROPERTY_OBSESSION"
             )
         );
@@ -83,8 +83,8 @@ class Model extends BaseIBlockElementModel
         return array(
             "ID" => $answerVariant["ID"],
             "NAME" => $answerVariant["NAME"],
-            "QUESTION_ID" => $answerVariant["SECTION_ID"],
-            "OBSESSION" => $answerVariant["PROPERTY_OBSESSION_VALUE"]
+            "QUESTION_ID" => $answerVariant["IBLOCK_SECTION_ID"],
+            "OBSESSION_ID" => $answerVariant["PROPERTY_OBSESSION_VALUE"]
         );
     }
 }

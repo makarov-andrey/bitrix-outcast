@@ -33,8 +33,7 @@ abstract class IBlockSection extends IBlock
 
         $sections = array();
         while ($section = $dbResult->Fetch()) {
-            $sectionId = $section["ID"];
-            $sections[$sectionId] = $this->formatDBResult($section);
+            $sections[] = $this->formatDBResult($section);
         }
         return $sections;
     }

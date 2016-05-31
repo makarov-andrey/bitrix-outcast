@@ -4,6 +4,7 @@ namespace ObsessionTest\Obsession;
 
 use Application\Base\Bitrix\Model\IBlockElement as BaseIBlockElementModel;
 use User\Model as UserModel;
+use CFile;
 
 class Model extends BaseIBlockElementModel
 {
@@ -110,5 +111,33 @@ class Model extends BaseIBlockElementModel
     public function userHasResult ($userId) {
         $resultId = $this->getUserResultId($userId);
         return !is_null($resultId);
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultSelect()
+    {
+        return array_merge(
+            parent::getDefaultSelect(),
+            array(
+                "DETAIL_TEXT",
+                "DETAIL_PICTURE"
+            )
+        );
+    }
+    
+    /**
+     * @param array $obsession
+     * @return array
+     */
+    public function formatDBResult($obsession)
+    {
+        return array(
+            "ID" => $obsession["ID"],
+            "NAME" => $obsession["NAME"],
+            "DESCRIPTION" => $obsession["DETAIL_TEXT"],
+            "SHARE_IMAGE" => CFile::GetPath($obsession["DETAIL_PICTURE"])
+        );
     }
 }

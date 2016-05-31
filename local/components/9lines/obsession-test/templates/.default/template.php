@@ -9,22 +9,23 @@
 
     <div class="question-num">
         <div class="current">1</div>
-        <div class="max">9</div>
+        <div class="max"><?=count($arResult["QUESTIONS"])?></div>
     </div>
 
-    <form action="<?=$APPLICATION->GetCurPage()?>">
-        <div class="question-text">
-            Как часто с тобой происходят вещи,
-            которые ты не в силах объяснить?
-        </div>
-/
-        <div class="question-answers">
-            <input type="radio" name="test1" id="radio1"><label class="answer transparent-btn" for="radio1">часто</label>
-            <input type="radio" name="test1" id="radio2"><label class="answer transparent-btn" for="radio2">редко</label>
-            <input type="radio" name="test1" id="radio3"><label class="answer transparent-btn" for="radio3">метко</label>
-            <input type="radio" name="test1" id="radio4"><label class="answer transparent-btn" for="radio4">пусто</label>
-        </div>
-
-        <input type="button" class="blue-btn js--next-question" value="Далее">
+    <form class="obsession-test-form" action="<?=$APPLICATION->GetCurPage()?>" method="post">
+        <input type="hidden" name="obsession_test" value="Y">
+        <?$i = 0?>
+        <?foreach($arResult["QUESTIONS"] as $question):?>
+            <div class="question <?=($i == 0 ? "active" : "")?>">
+                <div class="question-text"><?=$question["NAME"]?></div>
+                <div class="question-answers">
+                    <?foreach($question["ANSWER_VARIANTS"] as $variant):?>
+                        <input type="radio" name="answers[<?=$question["ID"]?>]" value="<?=$variant["ID"]?>" id="answer-<?=$variant["ID"]?>"><label class="answer transparent-btn" for="answer-<?=$variant["ID"]?>"><?=$variant["NAME"]?></label>
+                    <?endforeach;?>
+                </div>
+            </div>
+            <?$i++?>
+        <?endforeach?>
+        <input type="submit" class="blue-btn" value="Далее">
     </form>
 </div>

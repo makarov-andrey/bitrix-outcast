@@ -42,7 +42,7 @@ abstract class IBlock
     {
         return array(
             "SORT" => "ASC",
-            "CREATED" => "DESC"
+            "ID" => "DESC"
         );
     }
 
