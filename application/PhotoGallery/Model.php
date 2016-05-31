@@ -63,7 +63,7 @@ class Model extends BaseIBlockElementModel
         $select = $this->getDefaultSelect();
         $dbResult = $CIBlockElement->GetList(array(), $filter, false, false, $select);
         $dbResult->NavStart(1);
-        $result = $dbResult->fetch();
+        $result = $dbResult->Fetch();
         return !empty($result);
     }
 
@@ -97,10 +97,10 @@ class Model extends BaseIBlockElementModel
      * Сохраняет лайк от  текущего пользователя для фотографии
      *
      * @param int $photoId
-     * @param int $userId
      */
     public function likeByCurrentUser ($photoId)
     {
+        UserModel::assertUserAuthorized();
         $userId = UserModel::getCurrentUserId();
         $this->like($photoId, $userId);
     }
@@ -196,6 +196,7 @@ class Model extends BaseIBlockElementModel
      */
     public function toggleLikeByCurrentUser ($photoId)
     {
+        UserModel::assertUserAuthorized();
         $userId = UserModel::getCurrentUserId();
         $this->toggleLike($photoId, $userId);
     }

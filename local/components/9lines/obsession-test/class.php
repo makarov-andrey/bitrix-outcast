@@ -1,90 +1,162 @@
 <?php
 
 use Application\Tools;
+use ObsessionTest\Question\Model as QuestionModel;
+use ObsessionTest\Obsession\Model as ObsessionModel;
+use ObsessionTest\AnswerVariant\Model as AnswerVariantModel;
 
 class ObsessionTestController extends CBitrixComponent
 {
     /**
-     * Стартовое состояние, когда пользователь еще не начал отвечать на вопросы и
-     * ему показывается страница с кнопкой старта.
+     * @var QuestionModel
      */
-    const START_STATE = 100;
+    private $questionModel;
 
     /**
-     * Состояние прохождения теста. Пользователь начал проходить тест, но ответил
-     * еще не на все вопросы. Ему нужно показать его текущий вопрос.
+     * @var ObsessionModel
      */
-    const QUESTION_STATE = 200;
+    private $obsessionModel;
 
     /**
-     * Состояние результата теста. Пользователь закончил прохождение теста и ему
-     * нужно показать его результат.
+     * @var AnswerVariantModel
      */
-    const RESULT_STATE = 300;
+    private $answerVariantModel;
 
     /**
-     * Показатель текущего состояния теста.
+     * Массив вопросов с вариантами ответов
      *
-     * @var int
+     * @var array
      */
-    private $state;
+    private $questions;
+
+    /**
+     * Массив данных о результате прохождения теста (одержимость)
+     * 
+     * @var array
+     */
+    private $obsession;
+
+    /**
+     * Показатель прохождения теста
+     * 
+     * @var bool
+     */
+    private $completed = false;
+
+    /**
+     * ObsessionTestController constructor.
+     *
+     * @param CBitrixComponent|null $component
+     */
+    public function __construct($component)
+    {
+        $this->questionModel = new QuestionModel();
+        $this->obsessionModel = new ObsessionModel();
+        $this->answerVariantModel = new AnswerVariantModel();
+        parent::__construct($component);
+    }
 
     /**
      * вызывается битриксом
      */
     public function executeComponent()
     {
-        $this->collectData();
+        $this->questions = $this->obsessionModel->getList();
+        $this->processPost();
+        $this->obsession = $this->obsessionModel->getCurrentUserResult();
+        $this->completed = !is_null($this->obsession);
         $this->includeTemplate();
-    }
-
-    /**
-     * Собирает информацию о тесте
-     */
-    public function collectData ()
-    {
-        global $USER;
-        if (!$USER->IsAuthorized()) {
-            return;
-        }
     }
 
     /**
      * Обрабатывает POST-запрос пользователя
      */
-    public function processPost ()
+    public function processPost()
     {
-        if (!Tools::isPostRequestMethod()) {
+        if (!$this->needPostProcessing()) {
             return;
         }
-        if (isset($_POST["start_obsession_test"])) {
-            $this->start();
-            return;
+        $obsessionPoints = array();
+        foreach ($this->questions as $question) {
+            $this->assertValidAnswerInPost($question);
+            $answerId = $this->getAnswerIdFromPost($question);
+            $answer = $question["ANSWER_VARIANTS"][$answerId];
+            foreach ($answer["OBSESSION_POINTS"] as $point) {
+                if (!isset($obsessionPoints[$point])) {
+                    $obsessionPoints[$point] = 0;
+                }
+                $obsessionPoints[$point]++;
+            }
         }
-        if (isset($_POST["obsession_test_answer"])) {
-            $this->processAnswerPost();
-            return;
+        $maxPoint = max($obsessionPoints);
+        $resultObsessionId = array_search($maxPoint, $obsessionPoints);
+        $this->obsessionModel->setCurrentUserResult($resultObsessionId);
+    }
+
+    /**
+     * Проверяет нужна ли обработка post-запроса
+     * 
+     * @return bool
+     */
+    public function needPostProcessing () 
+    {
+        return Tools::isPostRequestMethod()
+            && isset($_POST["obsession_test"])
+            && $this->obsessionModel->currentUserHasResult();
+    }
+
+    /**
+     * Выбрасывает исключение, если в post-запросе не правильный ответ на вопрос
+     *
+     * @param array $question
+     */
+    public function assertValidAnswerInPost ($question)
+    {
+        $this->assertExistQuestionInPost($question);
+        $answerId = $this->getAnswerIdFromPost($question);
+        $answerIds = $this->answerVariantModel->collectIds($question["ANSWER_VARIANTS"]);
+        if (!in_array($answerId, $answerIds)) {
+            throw new InvalidArgumentException("Неверный формат ответа на вопрос.");
         }
     }
 
     /**
-     * Подключает нужный шаблон в соответствии с текущим состоянием
+     * Выбрасывает исключение, если в post-запросе нет ответа на вопрос 
+     * 
+     * @param array $question
      */
-    public function includeTemplate ()
+    public function assertExistQuestionInPost ($question)
     {
-        switch ($this->state) {
-            case self::START_STATE:
-                $templateName = "start.php";
-                break;
-            case self::QUESTION_STATE:
-                $templateName = "question.php";
-                break;
-            case self::RESULT_STATE:
-                $templateName = "result.php";
-                break;
-            default:
-                throw new LogicException("Неизвестное состояние компонента");
+        $answerId = $this->getAnswerIdFromPost($question);
+        if (is_null($answerId)) {
+            throw new InvalidArgumentException("Вы ответили не на все вопросы.");
         }
-        $this->includeComponentTemplate($templateName);
+    }
+
+    /**
+     * Возвращает id ответа для вопроса из post-запроса
+     *
+     * @param array $question
+     * @return null
+     */
+    public function getAnswerIdFromPost ($question) {
+        $questionId = $question["ID"];
+        return $_POST["answers"][$questionId] ?: null;
+    }
+
+    /**
+     * Подключает шаблон компонента
+     */
+    public function includeTemplate()
+    {
+        $this->arResult["completed"] = $this->completed;
+        $this->arResult["questions"] = $this->questions;
+        $this->arResult["obsession"] = $this->obsession;
+        if ($this->completed) {
+            $template = "result.php";
+        } else {
+            $template = "template.php";
+        }
+        $this->includeComponentTemplate($template);
     }
 }

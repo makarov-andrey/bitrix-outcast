@@ -33,7 +33,8 @@ abstract class IBlockElement extends IBlock
 
         $elements = array();
         while ($element = $dbResult->Fetch()) {
-            $elements[] = $this->formatDBResult($element);
+            $elementId = $element["ID"];
+            $elements[$elementId] = $this->formatDBResult($element);
         }
         return $elements;
     }

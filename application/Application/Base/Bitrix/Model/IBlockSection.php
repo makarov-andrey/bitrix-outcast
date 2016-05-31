@@ -27,15 +27,16 @@ abstract class IBlockSection extends IBlock
 
         $select = $this->getDefaultSelect();
 
-        $CIBlockElement = new CIBlockSection();
-        $dbResult = $CIBlockElement->GetList($sort, $filter, false, $select);
+        $CIBlockSection = new CIBlockSection();
+        $dbResult = $CIBlockSection->GetList($sort, $filter, false, $select);
         $dbResult->NavStart($limit, true, $page);
 
-        $elements = array();
-        while ($element = $dbResult->Fetch()) {
-            $elements[] = $this->formatDBResult($element);
+        $sections = array();
+        while ($section = $dbResult->Fetch()) {
+            $sectionId = $section["ID"];
+            $sections[$sectionId] = $this->formatDBResult($section);
         }
-        return $elements;
+        return $sections;
     }
 
     /**

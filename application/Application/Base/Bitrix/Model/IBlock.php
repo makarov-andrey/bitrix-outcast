@@ -80,4 +80,20 @@ abstract class IBlock
         $code = $this->getIBlockCode();
         return IBlockHelper::getIdByCode($code);
     }
+
+    /**
+     * Возвращает массив, состоящий из ID переданных строк результата
+     * запроса к БД
+     *
+     * @param array $rows
+     * @return int[]
+     */
+    public function collectIds ($rows)
+    {
+        $ids = array();
+        foreach($rows as $row) {
+            $ids[] = $row["ID"];
+        }
+        return $ids;
+    }
 }
