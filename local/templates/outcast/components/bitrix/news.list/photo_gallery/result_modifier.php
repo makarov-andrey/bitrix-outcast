@@ -20,7 +20,7 @@ foreach ($arResult["ITEMS"] as &$arItem) {
     $arItem["LIKED"] = $model->isCurrentUserLiked($arItem["ID"]);
     $arItem["LIKES_AMOUNT"] = $model->countLikes($arItem["ID"]);
     $arItem["SHARE_PARAMS"] = array(
-        "photo_id" => $arItem["ID"],
+        "photo_id" => $arItem["DETAIL_PICTURE"]["ID"],
         "image" => "http://" . $_SERVER["SERVER_NAME"] . $arItem["DETAIL_PICTURE"]["SRC"],
     );
 

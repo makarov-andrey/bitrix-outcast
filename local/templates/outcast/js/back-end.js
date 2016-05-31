@@ -191,7 +191,7 @@ function initGallery () {
             return;
         }
         $photo.find(".gallery-item-image").trigger("click");
-    };
+    }
 
     /**
      * Лайк фотографий

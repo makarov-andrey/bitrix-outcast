@@ -1,14 +1,9 @@
 <? /** @var CMain $APPLICATION */
-use PhotoGallery\Model as PhotoGalleryModel;
-$model = new PhotoGalleryModel();
 
 $image = "";
 $photoId = intval($_GET["share_photo_id"]);
 if ($photoId > 0) {
-	$photo = $model->getOne($photoId);
-	if (!is_null($photo)) {
-		$image = $photo["PICTURE"];
-	}
+	$image = CFile::GetPath($photoId);
 }
 if(empty($image)) {
     $image =  SITE_TEMPLATE_PATH . "/images/share-image.jpg";

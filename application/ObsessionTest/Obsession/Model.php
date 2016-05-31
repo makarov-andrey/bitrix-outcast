@@ -4,7 +4,6 @@ namespace ObsessionTest\Obsession;
 
 use Application\Base\Bitrix\Model\IBlockElement as BaseIBlockElementModel;
 use User\Model as UserModel;
-use CFile;
 
 class Model extends BaseIBlockElementModel
 {
@@ -137,7 +136,7 @@ class Model extends BaseIBlockElementModel
             "ID" => $obsession["ID"],
             "NAME" => $obsession["NAME"],
             "DESCRIPTION" => $obsession["DETAIL_TEXT"],
-            "SHARE_IMAGE" => CFile::GetPath($obsession["DETAIL_PICTURE"])
+            "SHARE_IMAGE" => $obsession["DETAIL_PICTURE"]
         );
     }
 }

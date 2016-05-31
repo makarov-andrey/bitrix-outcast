@@ -6,7 +6,9 @@
 
 $arShareParams = array();
 if (!empty($arResult["OBSESSION"]["SHARE_IMAGE"])) {
+    $path = CFile::GetPath($arResult["OBSESSION"]["SHARE_IMAGE"]);
     $arShareParams["image"] = "http://" . $_SERVER["SERVER_NAME"] . $arResult["OBSESSION"]["SHARE_IMAGE"];
+    $arShareParams["photo_id"] = $arResult["OBSESSION"]["SHARE_IMAGE"];
 }
 ?>
 
