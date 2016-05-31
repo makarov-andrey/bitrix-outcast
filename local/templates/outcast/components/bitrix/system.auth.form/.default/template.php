@@ -1,5 +1,7 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 /**
+ * @var CBitrixComponent $component
+ * @var array $arParams
  * @var CMain $APPLICATION
  * @var array $arResult
  */
@@ -11,6 +13,7 @@
     array(
         "AUTH_SERVICES" => $arResult["AUTH_SERVICES"],
         "SUFFIX" => "form",
+        "require_accept_terms" => $arParams["require_accept_terms"]
     ),
     $component,
     array("HIDE_ICONS" => "Y")

@@ -2,6 +2,10 @@
 /**
  * @var CMain $APPLICATION
  */
+
+$authParams = array(
+    "require_accept_terms" => true
+);
 ?>
 <div class="hero-block">
     <div class="hero-block-inner">
@@ -14,13 +18,9 @@
         <h3>Авторизируйся, чтобы начать:</h3>
 
         <div class="auth-buttons">
-            <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/throw/auth_component.php")?>
-            <label>
-                <input type="checkbox">
-                <span>Согласен(а) на обработку <a href="#">персональных данных</a></span>
-            </label>
+            <?$APPLICATION->IncludeFile(PATH_TO_INCLUDE . "/throw/auth_component.php", $authParams)?>
         </div>
 
-        <a href="#" class="blue-btn">Начать</a>
+        <a href="javascript: void(0);" class="blue-btn">Начать</a>
     </div>
 </div>
