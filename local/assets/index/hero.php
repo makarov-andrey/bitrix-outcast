@@ -8,7 +8,7 @@ $iBlockType = Model::IBLOCK_TYPE;
 <div class="hero-block hero-block-new">
     <div class="hero-block-inner">
         <h1><span>Ты — </span> <span>Изгой?</span></h1>
-        <h2>Узнай всю правду о себе</h2>
+        <h2>Узнай всю правду о&nbsp;себе</h2>
         <a href="/obsession-test/" class="blue-btn">Пройти тест</a>
         <a href="/photo-contest/" class="transparent-btn">
             <svg class="icon">
