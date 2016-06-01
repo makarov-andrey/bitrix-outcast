@@ -54,7 +54,8 @@ abstract class IBlock
     public function getDefaultFilter ()
     {
         return array(
-            "IBLOCK_ID" => $this->getIBlockId()
+            "IBLOCK_ID" => $this->getIBlockId(),
+            "ACTIVE" => "Y"
         );
     }
 
